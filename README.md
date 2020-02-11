@@ -2,7 +2,7 @@
 
 This workshop is a hands on lab for building an agrotech solution using [Azure IoT](https://azure.microsoft.com/overview/iot/?WT.mc_id=agrohack-github-jabenn).
 
-The final project that will be created is an internet connected device with environment sensors, that connects to a set of services that will predict the weather using both [Azure Maps](https://azure.microsoft.com/services/azure-maps/?WT.mc_id=agrohack-github-jabenn) and an AI Model running in [Azure ML Studio](https://azure.microsoft.com/services/machine-learning/?WT.mc_id=agrohack-github-jabenn). This weather prediction will be combined with soil moisture data, and used to send a signal to another device to indicate if the plants need watering.
+The final project that will be created is an internet connected device with environment sensors, that connects to a set of services that will predict the weather using both [Azure Maps](https://azure.microsoft.com/services/azure-maps/?WT.mc_id=agrohack-github-jabenn) and an AI Model running in [Azure ML Studio](https://azure.microsoft.com/services/machine-learning/?WT.mc_id=agrohack-github-jabenn). This weather prediction will be combined with soil moisture data, and used to send a signal to another device to indicate if the plants need watering. The main workshop won't cover the additional device, it is in an optional step at the end as it requires more hardware.
 
 Most of this implementation will use no-code solutions, such as [Azure IoT Central](https://azure.microsoft.com/services/iot-central/?WT.mc_id=agrohack-github-jabenn), an IoT Software-as-a-service (SaaS) platform. There will be some coding required, and this will all be in Python.
 
@@ -10,13 +10,13 @@ Most of this implementation will use no-code solutions, such as [Azure IoT Centr
 
 ### Hardware requirements
 
-Like all good IoT labs, you will need hardware to make this work.
+Like all good IoT labs, you will need hardware to make this work. You will also need a plant to monitor.
 
 #### The environment sensor
 
-* A [Raspberry Pi](https://www.raspberrypi.org/products/raspberry-pi-4-model-b/) running Raspbian Lite.
+* A [Raspberry Pi](https://www.raspberrypi.org/products/raspberry-pi-4-model-b/) with an SD card and power supply, running Raspbian Lite.
 
-  ![A Raspberry Pi](./Images/pi4.jpg)
+  ![A Raspberry Pi](./Images/pi4.jpg),
 
 * A [Grove base hat](https://www.seeedstudio.io/Grove-Base-Hat-for-Raspberry-Pi-p-3186.html)
 
@@ -29,12 +29,6 @@ Like all good IoT labs, you will need hardware to make this work.
 * A [Grove capacitive moisture sensor](http://wiki.seeedstudio.com/Grove-Capacitive_Moisture_Sensor-Corrosion-Resistant/)
 
   ![A Grove capacitive moisture sensor](./Images/moisture.jpg)
-
-#### Watering indicator
-
-* An [MXChip Azure IoT DevKit](https://microsoft.github.io/azure-iot-developer-kit/)
-
-  ![An MXChip board](./Images/mxchip.jpg)
 
 ### Software
 
@@ -69,6 +63,7 @@ If you are a student aged 18 and up, or teacher and have an email address from a
 
 ### Steps
 
+1. [Set up the environment monitor](./Steps/SetUpTheEnvironmentMonitor.md)
 1. [Create the application in IoT Central](./Steps/CreateTheAppInIoTCentral.md)
 
 
