@@ -23,7 +23,7 @@ To create your app, you can either create it manually from scratch to learn abou
 
 Your application will be provisioned, and you will see the dashboard once it is ready.
 
-Head to [Create a device](#CreateADevice) to configure a device inside the IoT Central app.
+Head to [Create a device](#create-a-device) to configure a device inside the IoT Central app.
 
 ### Creating the app manually
 
