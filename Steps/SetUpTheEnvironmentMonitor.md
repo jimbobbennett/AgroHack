@@ -2,7 +2,7 @@
 
 In this step you will assemble the hardware, and set up the Pi.
 
-## Assembling the hardware
+## Assemble the hardware
 
 1. Fix the Grove base hat to the pins on the Raspberry Pi, pressing down firmly.
 
@@ -16,15 +16,15 @@ In this step you will assemble the hardware, and set up the Pi.
 
    ![The pin location for the temperature/pressure/humidity sensor](../Images/BmePin.png)
 
-## Installing the Pi software
+## Install the Pi software
 
-### Setting up Raspbian Lite
+### Set up Raspbian Lite
 
 You will need to install Raspbian Lite on a micro-SD card. You can find the official instructions on how to configure this card in the [Raspberry Pi Installation guide](https://www.raspberrypi.org/documentation/installation/installing-images/README.md). You will need the latest version of Raspbian Lite.
 
 Once the SD card has Raspbian Lite installed on it, you will need to modify a couple of files to allow you connect the Pi to WiFi, and to access the device over SSH to program it.
 
-### Enabling SSH
+### Enable SSH
 
 1. Locate the SD card in File Explorer (Windows) or Finder (macOS). It will be in a volume called `boot`.
 1. Create a file in the root of `boot` called `ssh`. This file can be empty, it just needs to exist to allow you to ssh into the device
@@ -44,7 +44,7 @@ Once the SD card has Raspbian Lite installed on it, you will need to modify a co
 
     Replace `YOURSSID` and `YOURPASSWORD` with the SSID and password of your WiFi.
 
-## Starting up the Pi
+## Start up the Pi
 
 1. Insert the SD Card into the Pi
 1. Connect it to power, somewhere near your plant, and power it on

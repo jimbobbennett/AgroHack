@@ -1,0 +1,105 @@
+{
+  "@id": "urn:maryMonitor:PlantSensor_3yn:3",
+  "@type": "CapabilityModel",
+  "implements": [
+    {
+      "@id": "urn:maryMonitor:PlantSensor_3yn:qonud6em:1",
+      "@type": "InterfaceInstance",
+      "displayName": {
+        "en": "Interface"
+      },
+      "name": "PlantSensor_2c5",
+      "schema": {
+        "@id": "urn:maryMonitor:PlantSensor_2c5:3",
+        "@type": "Interface",
+        "displayName": {
+          "en": "Interface"
+        },
+        "contents": [
+          {
+            "@id": "urn:maryMonitor:PlantSensor_2c5:Temperature:1",
+            "@type": [
+              "Telemetry",
+              "SemanticType/Temperature"
+            ],
+            "displayName": {
+              "en": "Temperature"
+            },
+            "name": "Temperature",
+            "schema": "double",
+            "unit": "Units/Temperature/celsius"
+          },
+          {
+            "@id": "urn:maryMonitor:PlantSensor_2c5:Pressure:1",
+            "@type": [
+              "Telemetry",
+              "SemanticType/Pressure"
+            ],
+            "displayName": {
+              "en": "Pressure"
+            },
+            "name": "Pressure",
+            "schema": "double",
+            "unit": "Units/Pressure/kiloPascal"
+          },
+          {
+            "@id": "urn:maryMonitor:PlantSensor_2c5:Humidity:1",
+            "@type": [
+              "Telemetry",
+              "SemanticType/Humidity"
+            ],
+            "displayName": {
+              "en": "Humidity"
+            },
+            "name": "Humidity",
+            "schema": "double",
+            "unit": "Units/Humidity/percent"
+          },
+          {
+            "@id": "urn:maryMonitor:PlantSensor_2c5:Light:1",
+            "@type": "Telemetry",
+            "displayName": {
+              "en": "Light"
+            },
+            "name": "Light",
+            "schema": "double"
+          },
+          {
+            "@id": "urn:maryMonitor:PlantSensor_2c5:SoilMoisture:1",
+            "@type": "Telemetry",
+            "displayName": {
+              "en": "Soil Moisture"
+            },
+            "name": "SoilMoisture",
+            "schema": "double"
+          },
+          {
+            "@id": "urn:maryMonitor:PlantSensor_2c5:MoistureDescription:2",
+            "@type": "Telemetry",
+            "displayName": {
+              "en": "Moisture Description"
+            },
+            "name": "MoistureDescription",
+            "schema": "string"
+          },
+          {
+            "@id": "urn:maryMonitor:PlantSensor_2c5:id:3",
+            "@type": "Telemetry",
+            "displayName": {
+              "en": "id"
+            },
+            "name": "id",
+            "schema": "string"
+          }
+        ]
+      }
+    }
+  ],
+  "displayName": {
+    "en": "Plant Sensor"
+  },
+  "contents": [],
+  "@context": [
+    "http://azureiot.com/v1/contexts/IoTModel.json"
+  ]
+}
