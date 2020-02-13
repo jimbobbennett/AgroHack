@@ -32,26 +32,9 @@ Like all good IoT labs, you will need hardware to make this work. You will also 
 
 ### Software
 
-You will need to install some software to be able to program the different bits of hardware.
+You will need to install some software to be able to program the Raspberry Pi.
 
 * [Visual Studio Code](https://code.visualstudio.com/Download/?WT.mc_id=agrohack-github-jabenn)
-* [Arduino IDE](https://www.arduino.cc/en/Main/Software) - **NOTE** On Windows DO NOT install using the Windows store, instead use the *Windows Installer, for Windows XP and up*.
-* You may need to install a USB driver or configure USB support to communicate with the MXChip.
-
-  * Windows: Download and install USB driver from [STMicro](http://www.st.com/en/development-tools/stsw-link009.html).
-
-  * macOS: No driver is required for macOS.
-
-  * Linux: Run the following in terminal and logout and login for the group change to take effect:
-
-    ```bash
-    # Copy the default rules. This grants permission to the group 'plugdev'
-    sudo cp ~/.arduino15/packages/AZ3166/tools/openocd/0.10.0/linux/contrib/60-openocd.rules /etc/udev/rules.d/
-    sudo udevadm control --reload-rules
-
-    # Add yourself to the group 'plugdev'
-    # Logout and log back in for the group to take effect
-    sudo usermod -a -G plugdev $(whoami)
 
 ### Azure account
 
@@ -66,7 +49,7 @@ If you are a student aged 18 and up, or teacher and have an email address from a
 1. [Set up the environment monitor](./Steps/SetUpTheEnvironmentMonitor.md)
 1. [Create the application in Azure IoT Central](./Steps/CreateTheAppInIoTCentral.md)
 1. [Write the code to capture telemetry from the Raspberry Pi](./Steps/WriteThePiCode.md)
-
+1. [Export data to Azure Blob Storage](./Steps/ExportDataToBlobStorage.md)
 
 ## Storing the data
 

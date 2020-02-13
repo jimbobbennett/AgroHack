@@ -2,6 +2,8 @@
 
 In the [previous step](./CreateTheAppInIoTCentral.md), you created the app in Azure IoT Central. In this step, you will write the code to capture telemetry from the Raspberry Pi.
 
+> You can find all the code for this step in the [Code](./Code) folder.
+
 ## Connect to the Raspberry Pi from Visual Studio Code
 
 To write the code for the Raspberry Pi, you will use the Remote development capabilities of Visual Studio Code.
@@ -338,4 +340,4 @@ The Python app will only run as long as the terminal is connected. Ideally we wa
 
 <hr>
 
-In this step, you wrote the code to capture telemetry from the Raspberry Pi. In the [next step](./ExportingDataToBlobStorage.md), you will export IoT telemetry to Azure Blob Storage.
+In this step, you wrote the code to capture telemetry from the Raspberry Pi. In the [next step](./ExportDataToBlobStorage.md), you will export IoT telemetry to Azure Blob Storage.
