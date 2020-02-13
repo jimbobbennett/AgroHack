@@ -1,14 +1,16 @@
 # Create the application using Azure IoT Central
 
+In the [previous step](./SetUpTheEnvironmentMonitor.md) you assembled the hardware, and set up the Pi. In this step, you will create the app in Azure IoT Central.
+
+## Create your first Azure IoT Central app
+
 [Azure IoT Central](https://azure.microsoft.com/services/iot-central/?WT.mc_id=agrohack-github-jabenn) is an IoT Software-as-a-service (SaaS) platform. This allows you to define an service that can interact with IoT devices, sending data both ways from device to cloud, and cloud to device. You can define the capabilities of each device, and create dashboards to show data.
 
-## Create your first IoT Central app
-
-To create your app, you can either create it manually from scratch to learn about how to build IoT Central apps, or create it from a pre-defined template if you want to save time and already know how to use IoT Central.
+To create your app, you can either create it manually from scratch to learn about how to build Azure IoT Central apps, or create it from a pre-defined template if you want to save time and already know how to use Azure IoT Central.
 
 ### Create the app from a template
 
-1. Follow this link to create a new IoT Central app pre-configured for this workshop:
+1. Follow this link to create a new Azure IoT Central app pre-configured for this workshop:
 
    [apps.azureiotcentral.com/build/new/59a05afb-9cd6-4d41-8554-7389f5277ec8](https://apps.azureiotcentral.com/build/new/59a05afb-9cd6-4d41-8554-7389f5277ec8)
 
@@ -23,7 +25,7 @@ To create your app, you can either create it manually from scratch to learn abou
 
 Your application will be provisioned, and you will see the dashboard once it is ready.
 
-Head to [Create a device](#create-a-device) to configure a device inside the IoT Central app.
+Head to [Create a device](#create-a-device) to configure a device inside the Azure IoT Central app.
 
 ### Creating the app manually
 
@@ -47,7 +49,7 @@ Your application will be provisioned, and you will see the dashboard once it is 
 
 #### Define the device template
 
-IoT Central can work with multiple types of device, and multiple devices per device type. Device types are defined using templates - these specify the capabilities of the device including the telemetry that can be received from the device, and commands that can be sent to it.
+Azure IoT Central can work with multiple types of device, and multiple devices per device type. Device types are defined using templates - these specify the capabilities of the device including the telemetry that can be received from the device, and commands that can be sent to it.
 
 The environment sensor captures temperature, humidity, air pressure and soil moisture. You will need to define a template that has these values on it, so they can be received from the Pi.
 
@@ -74,9 +76,9 @@ Once the template is created, you need to add capabilities to it. These are defi
 
    1. **Telemetry** - actual values detected and sent but the device, for example in a thermostat it could be the current detected temperature
    1. **Properties** - settings on the device, for example in a thermostat it could be the desired temperature
-   1. **Commands** - calls that can be made on the device from IoT Central, optionally passing data. For example in a thermostat it could be called by a mobile app to send a request to change the desired temperature.
+   1. **Commands** - calls that can be made on the device from Visual Studio Code, optionally passing data. For example in a thermostat it could be called by a mobile app to send a request to change the desired temperature.
 
-* **Cloud properties** - these are properties set in IoT central against a device, but not synced to the device. For example a device could have a cloud property for the account name of the owner, or the date it was last services
+* **Cloud properties** - these are properties set in Azure IoT central against a device, but not synced to the device. For example a device could have a cloud property for the account name of the owner, or the date it was last services
 
 * **Views** - these are dashboards for a device that can contain charts, data values and other information allowing you to visualize telemetry or send commands.
 
@@ -169,4 +171,46 @@ Before the device template can be assigned to a device, it needs to be published
 
 ## Create a device
 
-Device templates can be assigned to one or more devices - a device being an actual physical device or a software simulator
+Device templates can be assigned to one or more devices - a device being an actual physical device or a software simulator. The Raspberry Pi that was set up in the last step will be added as a device and configured to use the new device template.
+
+### Create a new device
+
+1. Select **Devices** from the left-hand menu
+
+   ![The Devices menu](../Images/DevicesMenu.png)
+
+1. Select the **Environment Monitoring** device template in the template list
+
+   ![Selecting the device template](../Images/SelectEMDeviceTemplate.png)
+
+1. Select **+ New**
+
+   ![Creating a new device](../Images/NewDevice.png)
+
+1. Set the *Device Id* to `raspberry_pi`, the *Device Name* to `Raspberry Pi`. Then select **Create**
+
+   ![Setting up the device](../Images/SetDeviceId.png)
+
+The new device will appear in the devices list.
+
+![The devices list showing the new Raspberry Pi decice](../Images/DeviceList.png)
+
+### Get the device connection details
+
+Each device has a set of connection details that will be used on the actual device to connect to Azure IoT Central and send telemetry.
+
+1. Select the `Raspberry Pi` device in the devices list. This will show the view created earlier with all the telemetry boxes marked as *Waiting for data*.
+
+   ![The dashboard waiting for data](../Images/DashboardWaitingForData.png)
+
+1. Select **Connect**
+
+   ![The connect button](../Images/ConnectButton.png)
+
+1. Take a note of the *ID Scope*, *Device Id* and *Primary key* as you will need these values in the next step
+
+   ![The device connection dialog](../Images/DeviceConnectionDialog.png)
+
+<hr>
+
+In this step, you created the app in Azure IoT Central. In the [next step](./WriteThePiCode.md) you will write the code to capture telemetry from the Raspberry Pi.

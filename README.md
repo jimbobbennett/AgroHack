@@ -64,25 +64,15 @@ If you are a student aged 18 and up, or teacher and have an email address from a
 ### Steps
 
 1. [Set up the environment monitor](./Steps/SetUpTheEnvironmentMonitor.md)
-1. [Create the application in IoT Central](./Steps/CreateTheAppInIoTCentral.md)
+1. [Create the application in Azure IoT Central](./Steps/CreateTheAppInIoTCentral.md)
+1. [Write the code to capture telemetry from the Raspberry Pi](./Steps/WriteThePiCode.md)
 
-
-
-
-
-## The environment monitor
-
-### Constructing the hardware
-
-### Writing the software
-
-### Verifying that it all works
 
 ## Storing the data
 
 ### Creating a storage account
 
-### Adding data export to IoT Central
+### Adding data export to Azure IoT Central
 
 ## Querying Azure Maps for weather data
 
@@ -100,6 +90,6 @@ If you are a student aged 18 and up, or teacher and have an email address from a
 
 ## Controlling the water indicator
 
-### Setting up the device in IoT Central
+### Setting up the device in Azure IoT Central
 
 ### Sending a message to the device
