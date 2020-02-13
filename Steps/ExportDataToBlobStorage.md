@@ -128,10 +128,10 @@ There are two ways to create a storage account - from the Azure Portal or the Az
 1. Create the storage account using the following command
 
    ```sh
-   az storage account create
-    --location <location>
-    --name <account_name>
-    --resource-group AgroHack
+   az storage account create \
+    --location <location> \
+    --name <account_name> \
+    --resource-group AgroHack \
     --sku Standard_LRS
    ```
 
@@ -221,25 +221,75 @@ You can validate that data is being received via the Azure Portal, or via the CL
 
 1. Double click on the folder and drill into the telemetry. It will be divided into folders by year, month, day, hour (UTC) and minute.
 
-1. Download a `.json` file and view it. It will contain a time stamp, system properties and the telemetry as the body
+1. Download a `.json` file and view it in Visual Studio Code. It will contain one entry per telemetry value sent during a minute, with a time stamp, system properties and the telemetry as the body
 
-```json
-{
-    "EnqueuedTimeUtc": "2020-02-13T21:59:49.2860000Z",
-    "Properties": {},
-    "SystemProperties": {
-        "connectionDeviceId": "raspberry_pi",
-        "connectionAuthMethod": "{\"scope\":\"device\",\"type\":\"sas\",\"issuer\":\"iothub\",\"acceptingIpFilterRule\":null}",
-        "connectionDeviceGenerationId": "637171474512477666",
-        "contentType": "application/json",
-        "contentEncoding": "utf-8",
-        "enqueuedTime": "2020-02-13T21:59:49.2860000Z"
-    },
-    "Body": {
-        "humidity": 58.13,
-        "pressure": 99.46,
-        "temperature": 16.68,
-        "soil_moisture": 470
+    ```json
+    {
+        "EnqueuedTimeUtc": "2020-02-13T21:59:49.2860000Z",
+        "Properties": {},
+        "SystemProperties": {
+            "connectionDeviceId": "raspberry_pi",
+            "connectionAuthMethod": "{\"scope\":\"device\",\"type\":\"sas\",\"issuer\":\"iothub\",\"acceptingIpFilterRule\":null}",
+            "connectionDeviceGenerationId": "637171474512477666",
+            "contentType": "application/json",
+            "contentEncoding": "utf-8",
+            "enqueuedTime": "2020-02-13T21:59:49.2860000Z"
+        },
+        "Body": {
+            "humidity": 58.13,
+            "pressure": 99.46,
+            "temperature": 16.68,
+            "soil_moisture": 470
+        }
     }
-}
-```
+    ```
+
+#### Validate the data with the Azure CLI
+
+1. Run the following command to list the blobs stored in the storage account
+
+   ```sh
+   az storage blob list \
+    --account-name <account_name> \
+    --account-key <account_key> \
+    --container-name environmentdata \
+    --output table
+   ```
+
+   Set `<account_name>` to the name you used for the storage account. Set `<account_key>` to one of the keys used to create the collection.
+
+1. Download the blob to a file with the following command
+
+   ```sh
+   az storage blob download \
+    --container-name environmentdata \
+    --name <blob_name> \
+    --file data.json \
+    --account-name <account_name> \
+    --account-key <account_key>
+   ```
+
+   Set `<blob_name>` to be the `Name` value of one of the blobs from the list output by the previous step. You will need to use the full name including the folders, such as `d8dc5b3b-8324-43eb-a177-6ab725844410/telemetry/2020/02/13/20/46/01.json`. Set `<account_name>` to the name you used for the storage account. Set `<account_key>` to one of the keys used to create the collection.
+
+   This will download a file into the current directory called `data.json`. View this file with Visual Studio Code. It will contain one entry per telemetry value sent during a minute, with a time stamp, system properties and the telemetry as the body
+
+    ```json
+    {
+        "EnqueuedTimeUtc": "2020-02-13T21:59:49.2860000Z",
+        "Properties": {},
+        "SystemProperties": {
+            "connectionDeviceId": "raspberry_pi",
+            "connectionAuthMethod": "{\"scope\":\"device\",\"type\":\"sas\",\"issuer\":\"iothub\",\"acceptingIpFilterRule\":null}",
+            "connectionDeviceGenerationId": "637171474512477666",
+            "contentType": "application/json",
+            "contentEncoding": "utf-8",
+            "enqueuedTime": "2020-02-13T21:59:49.2860000Z"
+        },
+        "Body": {
+            "humidity": 58.13,
+            "pressure": 99.46,
+            "temperature": 16.68,
+            "soil_moisture": 470
+        }
+    }
+    ```
