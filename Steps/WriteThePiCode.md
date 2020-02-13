@@ -268,7 +268,7 @@ Python has a concept of `.env` files to store secrets such as connection details
                 print(telemetry)
 
                 await device_client.send_message(telemetry)
-                await asyncio.sleep(10)
+                await asyncio.sleep(60)
 
         await main_loop()
 
@@ -278,6 +278,8 @@ Python has a concept of `.env` files to store secrets such as connection details
     if __name__ == '__main__':
         asyncio.run(main())
     ```
+
+   This code connects to Azure IoT Central, and every 60 seconds will poll for data from the sensors and send it as a telemetry message.
 
 1. Save the file
 

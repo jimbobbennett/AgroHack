@@ -73,7 +73,7 @@ async def main():
             print(telemetry)
 
             await device_client.send_message(telemetry)
-            await asyncio.sleep(10)
+            await asyncio.sleep(60)
 
     await main_loop()
 
