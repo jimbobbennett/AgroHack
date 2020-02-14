@@ -51,11 +51,6 @@ If you are a student aged 18 and up, or teacher and have an email address from a
 1. [Write the code to capture telemetry from the Raspberry Pi](./Steps/WriteThePiCode.md)
 1. [Export data to Azure Blob Storage](./Steps/ExportDataToBlobStorage.md)
 
-## Storing the data
-
-### Creating a storage account
-
-### Adding data export to Azure IoT Central
 
 ## Querying Azure Maps for weather data
 
