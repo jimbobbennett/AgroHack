@@ -16,7 +16,7 @@ To create your app, you can either create it manually from scratch to learn abou
 
 1. Sign in with your Microsoft account if needed
 1. Give your application a name that makes sense to you, such as `Agro Hack`
-1. Provide a unique URL for your app. This needs to be globally unique, so include things such as the data or your name. For example `agrohackjim2020`.
+1. Provide a unique URL for your app. This needs to be globally unique, so include things such as the date or your name. For example `agrohackjim2020`.
 1. Select a pricing plan. This hack only uses 2 devices, so is free for all tiers, so select the one that makes sense for you. The Free tier is ideal as long as you don't want your code to run longer than 7 days.
 
     For the free tier you will need to provide a name and phone number, that will be verified. For the other tiers you will need an Azure subscription. You can find details on different free subscriptions [here](https://github.com/jimbobbennett/AgroHack/blob/master/README.md#azure-account).

@@ -113,7 +113,7 @@ There are two ways to create a storage account - from the Azure Portal or the Az
 
    Note the name of the location closest to you
 
-1. Create a new resource group with the following command
+1. Create a new Resource Group with the following command
 
    ```sh
    az group create --name AgroHack --location <location>
@@ -121,7 +121,7 @@ There are two ways to create a storage account - from the Azure Portal or the Az
 
    For the `<location>`, use the name of the location closest to you.
 
-   This will create a resource group called `AgroHack` in the location you specify.
+   This will create a Resource Group called `AgroHack` in the location you specify.
 
    > Resource groups are logical groupings of Azure services, allowing you to manage all the services for a particular application or project together. At the end of this workshop this Resource Group will be deleted, deleting all the services created.
 
@@ -137,9 +137,9 @@ There are two ways to create a storage account - from the Azure Portal or the Az
 
    For the `<location>`, use the name of the location closest to you.
 
-   For the `<account_name>`, pick a name that is globally unique, so include things such as the data or your name, for example `agrohackjim2020`. To make it easier, name it the same as your Azure IoT Central app.
+   For the `<account_name>`, pick a name that is globally unique, so include things such as the date or your name, for example `agrohackjim2020`. To make it easier, name it the same as your Azure IoT Central app.
 
-   The `-resource-group AgroHack` setting adds this storage account to the new resource group you created in the previous step.
+   The `-resource-group AgroHack` setting adds this storage account to the new Resource Group you created in the previous step.
 
    The `--sku Standard_LRS` setting sets the data replication to be `Locally-redundant storage (LRS)` as this is the cheapest option. For production workloads you would want better redundancy, read the [documentation on data redundancy](https://docs.microsoft.com/azure/storage/common/storage-redundancy/?WT.mc_id=agrohack-github-jabenn) for more details on this.
 
@@ -154,7 +154,7 @@ There are two ways to create a storage account - from the Azure Portal or the Az
     --output table
    ```
 
-   Set `<account_name>` to the name you used for the storage account. The account keys are listed in the `Value` column of the output.
+   For `<account_name>` use the name you used for the storage account. The account keys are listed in the `Value` column of the output.
 
 1. Create the collection with the following command
 
@@ -165,7 +165,9 @@ There are two ways to create a storage account - from the Azure Portal or the Az
     --account-key <account_key>
    ```
 
-   Set `<account_name>` to the name you used for the storage account. Set `<account_key>` to one of the keys from the previous step.
+   For `<account_name>` use the name you used for the storage account.
+
+   For `<account_key>` use one of the keys from the previous step.
 
 ## Set up data export
 
@@ -256,7 +258,9 @@ You can validate that data is being received via the Azure Portal, or via the CL
     --output table
    ```
 
-   Set `<account_name>` to the name you used for the storage account. Set `<account_key>` to one of the keys used to create the collection.
+   For `<account_name>` use the name you used for the storage account.
+
+   For `<account_key>` use one of the keys used to create the collection.
 
 1. Download the blob to a file with the following command
 
@@ -269,7 +273,11 @@ You can validate that data is being received via the Azure Portal, or via the CL
     --account-key <account_key>
    ```
 
-   Set `<blob_name>` to be the `Name` value of one of the blobs from the list output by the previous step. You will need to use the full name including the folders, such as `d8dc5b3b-8324-43eb-a177-6ab725844410/telemetry/2020/02/13/20/46/01.json`. Set `<account_name>` to the name you used for the storage account. Set `<account_key>` to one of the keys used to create the collection.
+   For `<blob_name>` use be the `Name` value of one of the blobs from the list output by the previous step. You will need to use the full name including the folders, such as `d8dc5b3b-8324-43eb-a177-6ab725844410/telemetry/2020/02/13/20/46/01.json`.
+
+   For `<account_name>` use the name you used for the storage account.
+
+   For `<account_key>` use one of the keys used to create the collection.
 
    This will download a file into the current directory called `data.json`. View this file with Visual Studio Code. It will contain one entry per telemetry value sent during a minute, with a time stamp, system properties and the telemetry as the body
 
@@ -293,3 +301,15 @@ You can validate that data is being received via the Azure Portal, or via the CL
         }
     }
     ```
+
+## Use this data
+
+Once the data is in blob storage, it can be access and used by multiple Azure services. This workshop won't cover these use cases in depth as there are to0 many possibilities. To learn more about ways to use this data, check out the following documentation:
+
+* [Access data in Azure storage services from ML Studio](https://docs.microsoft.com/azure/machine-learning/how-to-access-data/?WT.mc_id=agrohack-github-jabenn)
+* [Access cloud data in a Jupyter notebook](https://docs.microsoft.com/azure/notebooks/access-data-resources-jupyter-notebooks#azure-storage?WT.mc_id=agrohack-github-jabenn)
+* [Trigger an Azure Function when entries are added to blob storage](https://docs.microsoft.com/azure/azure-functions/functions-create-storage-blob-triggered-function?WT.mc_id=agrohack-github-jabenn)
+
+<hr>
+
+In this step, you exported IoT telemetry to Azure Blob Storage. In the [next step](./TriggerRule.md) you will create an Azure IoT Central rule triggered when the soil moisture is too low.

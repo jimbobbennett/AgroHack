@@ -293,6 +293,13 @@ Python has a concept of `.env` files to store secrets such as connection details
 
    ![The app running showing telemetry in the terminal](../Images/AppOutput.png)
 
+<!--
+### Breakdown of the code
+
+ To Do 
+ 
+-->
+
 ### Verify the data in Azure IoT Central
 
 1. Open the app in Azure IoT Central
@@ -300,13 +307,6 @@ Python has a concept of `.env` files to store secrets such as connection details
 1. The view will load, and there should be data visible that matches the data being sent
 
    ![The view showing data from the device](../Images/ViewWithData.png)
-
-<!--
-### Breakdown of the code
-
- To Do 
- 
--->
 
 ## Run the Python app continuously
 

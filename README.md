@@ -32,9 +32,28 @@ Like all good IoT labs, you will need hardware to make this work. You will also 
 
 ### Software
 
-You will need to install some software to be able to program the Raspberry Pi.
+You will need to install some software to be able to program the Raspberry Pi and create the various parts of this app
 
 * [Visual Studio Code](https://code.visualstudio.com/Download/?WT.mc_id=agrohack-github-jabenn)
+* [Azure Functions Core Tools](https://docs.microsoft.com/azure/azure-functions/functions-run-local?WT.mc_id=agrohack-github-jabenn)
+* Python
+
+  * **Windows:**
+
+    You can install Python from the [Windows Store](https://www.microsoft.com/p/python-38/9mssztt1n39l?activetab=pivot:overviewtab&WT.mc_id=agrohack-github-jabenn). This configures Python correctly on your PATH, and there are no further steps.
+
+    If you don't want to use the store, you can install from the [Python Downloads page](https://www.python.org/downloads/). If you do this, ensure you check the *Add Python to PATH* option.
+
+    ![The python installer dialog highlighting the Add Python 3.8 to PATH option](./images/PythonInstaller.png)
+
+  * **macOS**
+  
+    You can install Python from the [Python Downloads page](https://www.python.org/downloads/).
+
+    When Python is installed it will open a Finder window. Run the following scripts from inside that Finder window to set up certificates and add Python to your PATH:
+
+    1. `Update Shell Profile.command`
+    1. `Install Certificates.command`
 
 ### Azure account
 
@@ -50,7 +69,8 @@ If you are a student aged 18 and up, or teacher and have an email address from a
 1. [Create the application in Azure IoT Central](./Steps/CreateTheAppInIoTCentral.md)
 1. [Write the code to capture telemetry from the Raspberry Pi](./Steps/WriteThePiCode.md)
 1. [Export data to Azure Blob Storage](./Steps/ExportDataToBlobStorage.md)
-
+1. [Trigger a rule when the soil moisture is too low](./Steps/TriggerRule.md)
+1. [Look up the weather for the device's location using Azure Maps](./Steps/CheckWeatherWithAzureMaps.md)
 
 ## Querying Azure Maps for weather data
 
