@@ -51,7 +51,7 @@ Your application will be provisioned, and you will see the dashboard once it is 
 
 Azure IoT Central can work with multiple types of device, and multiple devices per device type. Device types are defined using templates - these specify the capabilities of the device including the telemetry that can be received from the device, and commands that can be sent to it.
 
-The environment sensor captures temperature, humidity, air pressure and soil moisture. You will need to define a template that has these values on it, so they can be received from the Pi.
+The environment sensor captures temperature, humidity, air pressure and soil moisture. You will need to define a template that has these values on it, so they can be received from the Pi. It can also receive a message indicating that the plant needs watering and use this to turn on an LED, so the template will need to support this via a command.
 
 1. From the left-hand menu, select **Device Templates**
 
@@ -75,14 +75,14 @@ Once the template is created, you need to add capabilities to it. These are defi
 * **Interfaces** - these are reusable collections of capabilities, and are grouped into three categories:
 
    1. **Telemetry** - actual values detected and sent but the device, for example in a thermostat it could be the current detected temperature
-   1. **Properties** - settings on the device, for example in a thermostat it could be the desired temperature
+   1. **Properties** - settings on the device, for example in a thermostat it could be the desired temperature. These can be set by the device, or via IoT Central and synced to the device.
    1. **Commands** - calls that can be made on the device from Visual Studio Code, optionally passing data. For example in a thermostat it could be called by a mobile app to send a request to change the desired temperature.
 
 * **Cloud properties** - these are properties set in Azure IoT central against a device, but not synced to the device. For example a device could have a cloud property for the account name of the owner, or the date it was last services
 
 * **Views** - these are dashboards for a device that can contain charts, data values and other information allowing you to visualize telemetry or send commands.
 
-The environment sensor needs a capability model created, with an interface defined for the telemetry values being sent, and a view to visualize these values.
+The environment sensor needs a capability model created, with an interface defined for the telemetry values being sent, a command to indicate that the plant needs watering, and a view to visualize these values.
 
 1. Select the **Custom** capability model
 
@@ -106,14 +106,32 @@ This interface needs 4 telemetry values added to it for the temperature, pressur
 * **Schema** - this defines the data type for the value being received, such as an integer or a floating point number
 * **Unit** - this defines the unit for know telemetry types, for example °C for temperatures.
 
-1. Select the **+ Add capability** button to add new capabilities, and add the following:
+1. Select the **+ Add capability** button to add new capabilities, and add the following four values:
 
-   |  Display Name | Name          | Capability Type | Schema | Unit |
-   | ------------- | ------------- | --------------- | ------ | ---- |
-   | Temperature   | temperature   | Temperature     | Double | °C   |
-   | Pressure      | pressure      | Pressure        | Double | kPa  |
-   | Humidity      | humidity      | Humidity        | Double | %    |
-   | Soil Moisture | soil_moisture | None            | Double | None |
+   |  Display Name | Name          | Capability Type | Semantic Type | Schema | Unit |
+   | ------------- | ------------- | --------------- | ------------- | ------ | ---- |
+   | Temperature   | temperature   | Telemetry       | Temperature   | Double | °C   |
+   | Pressure      | pressure      | Telemetry       | Pressure      | Double | kPa  |
+   | Humidity      | humidity      | Telemetry       | Humidity      | Double | %    |
+   | Soil Moisture | soil_moisture | Telemetry       | None          | Double | None |
+
+   ![The telemetry values](../Images/TelemetryValues.png)
+
+The interface also needs a command that can be triggered to indicate that the plant needs watering.
+
+1. Select the **+ Add capability** button to add one more new capability, and add the following value:
+
+   |  Display Name  | Name           | Capability Type |
+   | -------------- | -------------- | --------------- |
+   | Needs Watering | needs_watering | Command         |
+
+1. Turn on **Request** for the command and set the following values:
+
+   |  Display Name  | Name           | Schema  |
+   | -------------- | -------------- | ------- |
+   | Needs Watering | needs_watering | Boolean |
+
+   ![The command value](../Images/Command.png)
 
 1. Select the **Save** button from the top menu
 
@@ -146,6 +164,8 @@ A view is used to visualize this telemetry, and this needs to be added to the ca
    Configure the chart or last know value to your liking.
 
 1. Repeat this for the other telemetry values. If you want to plot multiple telemetry values on the same chart use the check boxes to select multiple values and drag them together. You can add telemetry values multiple times to get multiple views over the data.
+
+1. Drag *Needs Watering* from the *Command* section onto the dashboard.
 
 1. You can also customize the view with labels, markdown or images if desired.
 

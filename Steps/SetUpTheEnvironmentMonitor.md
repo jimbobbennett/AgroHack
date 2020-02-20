@@ -16,6 +16,8 @@ In this step you will assemble the hardware, and set up the Pi.
 
    ![The pin location for the temperature/pressure/humidity sensor](../Images/BmePin.png)
 
+1. Connect the Grove LED socket kit to socket **D24** on the Grove base hat, and insert an LED with the longer leg inserted into the positive hole
+
 ## Install the Pi software
 
 ### Set up Raspbian Lite
@@ -63,4 +65,3 @@ Once the SD card has Raspbian Lite installed on it, you will need to modify a co
 <hr>
 
 In this step you assembled the hardware, and set up the Pi. In the [next step](./CreateTheAppInIoTCentral.md), you will create the app in Azure IoT Central.
-

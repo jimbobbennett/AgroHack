@@ -196,18 +196,24 @@ Python has a concept of `.env` files to store secrets such as connection details
     import smbus2, bme280, os, asyncio, json
     from dotenv import load_dotenv
     from grove.grove_moisture_sensor import GroveMoistureSensor
+    from grove.grove_led import GroveLed
     from azure.iot.device.aio import IoTHubDeviceClient, ProvisioningDeviceClient
+    from azure.iot.device import MethodResponse
 
     # Configuration parameters
     bme_pin = 1
     bme_address = 0x76
     moisture_pin = 2
+    led_pin = 16
 
     # Create the sensors
     bus = smbus2.SMBus(bme_pin)
     calibration_params = bme280.load_calibration_params(bus, bme_address)
 
     moisture_sensor = GroveMoistureSensor(moisture_pin)
+
+    # Create the LED
+    led = GroveLed(led_pin)
 
     # Load the Azure IoT Central connection parameters
     load_dotenv()
@@ -261,6 +267,24 @@ Python has a concept of `.env` files to store secrets such as connection details
         await device_client.connect()
         print('Connected')
 
+        # listen for commands
+        async def command_listener(device_client):
+            while True:
+                method_request = await device_client.receive_method_request('needs_watering')
+                needs_watering = method_request.payload
+                print('Needs watering:', needs_watering)
+                payload = {'result': True}
+
+                if needs_watering:
+                    led.on()
+                else:
+                    led.off()
+
+                method_response = MethodResponse.create_from_method_request(
+                    method_request, 200, payload
+                )
+                await device_client.send_method_response(method_response)
+
         # async loop that sends the telemetry
         async def main_loop():
             while True:
@@ -270,7 +294,12 @@ Python has a concept of `.env` files to store secrets such as connection details
                 await device_client.send_message(telemetry)
                 await asyncio.sleep(60)
 
+        listeners = asyncio.gather(command_listener(device_client))
+
         await main_loop()
+
+        # Cancel listening
+        listeners.cancel()
 
         # Finally, disconnect
         await device_client.disconnect()
@@ -279,7 +308,7 @@ Python has a concept of `.env` files to store secrets such as connection details
         asyncio.run(main())
     ```
 
-   This code connects to Azure IoT Central, and every 60 seconds will poll for data from the sensors and send it as a telemetry message.
+   This code connects to Azure IoT Central, and every 60 seconds will poll for data from the sensors and send it as a telemetry message. It will also listen for the `needs_watering` command, and turn an LED on or off depending on the value sent with the command.
 
 1. Save the file
 
@@ -307,6 +336,9 @@ Python has a concept of `.env` files to store secrets such as connection details
 1. The view will load, and there should be data visible that matches the data being sent
 
    ![The view showing data from the device](../Images/ViewWithData.png)
+
+1. Select the **Needs Watering** command. It will open as a new tab next to the view.
+1. Try checking and unchecking the *Needs watering* value and selecting **Run**. The LED should light when *Needs watering* is checked, and turn off when it is unchecked.
 
 ## Run the Python app continuously
 

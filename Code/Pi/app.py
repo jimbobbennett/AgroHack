@@ -1,18 +1,24 @@
 import smbus2, bme280, os, asyncio, json
 from dotenv import load_dotenv
 from grove.grove_moisture_sensor import GroveMoistureSensor
+from grove.grove_led import GroveLed
 from azure.iot.device.aio import IoTHubDeviceClient, ProvisioningDeviceClient
+from azure.iot.device import MethodResponse
 
 # Configuration parameters
 bme_pin = 1
 bme_address = 0x76
 moisture_pin = 2
+led_pin = 16
 
 # Create the sensors
 bus = smbus2.SMBus(bme_pin)
 calibration_params = bme280.load_calibration_params(bus, bme_address)
 
 moisture_sensor = GroveMoistureSensor(moisture_pin)
+
+# Create the LED
+led = GroveLed(led_pin)
 
 # Load the IoT Central connection parameters
 load_dotenv()
@@ -66,6 +72,24 @@ async def main():
     await device_client.connect()
     print('Connected')
 
+    # listen for commands
+    async def command_listener(device_client):
+        while True:
+            method_request = await device_client.receive_method_request('needs_watering')
+            needs_watering = method_request.payload
+            print('Needs watering:', needs_watering)
+            payload = {'result': True}
+
+            if needs_watering:
+                led.on()
+            else:
+                led.off()
+
+            method_response = MethodResponse.create_from_method_request(
+                method_request, 200, payload
+            )
+            await device_client.send_method_response(method_response)
+
     # async loop that sends the telemetry
     async def main_loop():
         while True:            
@@ -75,7 +99,12 @@ async def main():
             await device_client.send_message(telemetry)
             await asyncio.sleep(60)
 
+    listeners = asyncio.gather(command_listener(device_client))
+
     await main_loop()
+
+    # Cancel listening
+    listeners.cancel()
 
     # Finally, disconnect
     await device_client.disconnect()

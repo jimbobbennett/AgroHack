@@ -1,10 +1,10 @@
 # Agrotech Hackathon
 
-This workshop is a hands on lab for building an agrotech solution using [Azure IoT](https://azure.microsoft.com/overview/iot/?WT.mc_id=agrohack-github-jabenn).
+This workshop is a hands on lab for building an AgroTech solution using [Azure IoT](https://azure.microsoft.com/overview/iot/?WT.mc_id=agrohack-github-jabenn).
 
-The final project that will be created is an internet connected device with environment sensors, that connects to a set of services that will predict the weather using both [Azure Maps](https://azure.microsoft.com/services/azure-maps/?WT.mc_id=agrohack-github-jabenn) and an AI Model running in [Azure ML Studio](https://azure.microsoft.com/services/machine-learning/?WT.mc_id=agrohack-github-jabenn). This weather prediction will be combined with soil moisture data, and used to send a signal to another device to indicate if the plants need watering. The main workshop won't cover the additional device, it is in an optional step at the end as it requires more hardware.
+The final project that will be created is an internet connected device with environment sensors, that connects to a set of services that will store the telemetry data, and predict the weather using both [Azure Maps](https://azure.microsoft.com/services/azure-maps/?WT.mc_id=agrohack-github-jabenn) and an AI Model running in [Azure ML Studio](https://azure.microsoft.com/services/machine-learning/?WT.mc_id=agrohack-github-jabenn). This weather prediction will be combined with soil moisture data, and used to send a signal back to the device to indicate if the plants need watering, and this will be indicated by an LED.
 
-Most of this implementation will use no-code solutions, such as [Azure IoT Central](https://azure.microsoft.com/services/iot-central/?WT.mc_id=agrohack-github-jabenn), an IoT Software-as-a-service (SaaS) platform. There will be some coding required, and this will all be in Python.
+Most of this implementation will a no-code solution, [Azure IoT Central](https://azure.microsoft.com/services/iot-central/?WT.mc_id=agrohack-github-jabenn), an IoT Software-as-a-service (SaaS) platform. There will be some coding required, and this will all be in Python.
 
 ## Getting started
 
@@ -29,6 +29,10 @@ Like all good IoT labs, you will need hardware to make this work. You will also 
 * A [Grove capacitive moisture sensor](http://wiki.seeedstudio.com/Grove-Capacitive_Moisture_Sensor-Corrosion-Resistant/)
 
   ![A Grove capacitive moisture sensor](./Images/moisture.jpg)
+
+* A [Grove LED socket kit with an LED](http://wiki.seeedstudio.com/Grove-LED_Socket_Kit/)
+
+  ![A grove led socket kit](./Images/Grove-White-LED-p-2016.jpeg)
 
 ### Software
 
@@ -68,6 +72,11 @@ If you are a student aged 18 and up, or teacher and have an email address from a
 1. [Set up the environment monitor](./Steps/SetUpTheEnvironmentMonitor.md)
 1. [Create the application in Azure IoT Central](./Steps/CreateTheAppInIoTCentral.md)
 1. [Write the code to capture telemetry from the Raspberry Pi](./Steps/WriteThePiCode.md)
+
+
+
+
+
 1. [Export data to Azure Blob Storage](./Steps/ExportDataToBlobStorage.md)
 1. [Trigger a rule when the soil moisture is too low](./Steps/TriggerRule.md)
 1. [Look up the weather for the device's location using Azure Maps](./Steps/CheckWeatherWithAzureMaps.md)
