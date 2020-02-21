@@ -79,7 +79,9 @@ If you are a student aged 18 and up, or teacher and have an email address from a
 
 1. [Export IoT telemetry to Azure Event Hubs](./Steps/ExportDataToEventHubs.md)
 
-1. [Connect the event hub to Blob Storage to save telemetry data](./Steps/ExportDataToBlobStorage.md)
+1. [Create a storage account to store telemetry data](./Steps/CreateBlobStorage.md)
+
+1. [Use Azure Stream Analytics to stream data into the storage account](./Steps/ExportDataToBlobStorage.md)
 
 
 

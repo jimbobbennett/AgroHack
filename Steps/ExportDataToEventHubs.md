@@ -6,6 +6,8 @@ In the [previous step](./WriteThePiCode), you wrote the code to capture telemetr
 
 [Azure Event Hubs](https://azure.microsoft.com/services/event-hubs/#features?WT.mc_id=agrohack-github-jabenn) allow you to take streaming data and connect it to other services, such as storing the data or using Azure Stream Analytics to analyze the data in real time. Azure IoT Central can be configured to stream data to an Azure Event Hubs instance.
 
+To export data you will need an Azure account. If you don't have one, head to the [Azure Account](https://github.com/jimbobbennett/AgroHack#azure-account) instructions to create an account.
+
 ### Creating an Azure Event Hubs instance
 
 There are two ways to create an Azure Event Hubs instance - from the Azure Portal or the Azure CLI.
@@ -145,16 +147,16 @@ The instance consists of a namespace, containing an event hub.
 
    ```sh
    az eventhubs eventhub create \
-    --name Telemetry \
+    --name telemetry \
     --resource-group AgroHack \
     --namespace-name <namespace_name>
    ```
 
-   The `--name Telemetry` names the event hub as `Telemetry`.
+   The `--name telemetry` names the event hub as `telemetry`.
 
    The `--resource-group AgroHack` setting adds this event hubs namespace to the new Resource Group you created in the previous step.
 
-   For the `<namespace_name>`, use the name you used when creating the namespace in the previous step.
+   For the `<namespace_name>`, use the name you used when creating the namespace.
 
 ## Set up data export
 
@@ -202,4 +204,4 @@ The easiest way to see messages flowing to the Event Hub is via the Azure Portal
 
 <hr>
 
-In this step you exported IoT telemetry to Azure Event Hubs. In the [next step](./ExportDataToBlobStorage.md), you will connect the event hub to Azure Blob Storage to save telemetry data.
+In this step you exported IoT telemetry to Azure Event Hubs. In the [next step](./CreateBlobStorage.md), you will create a storage account to store telemetry data.

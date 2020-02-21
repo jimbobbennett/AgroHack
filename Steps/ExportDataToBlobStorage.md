@@ -1,212 +1,163 @@
-# Export data to Azure Blob storage
+# Use Azure Stream Analytics to stream data into the storage account
 
-In the [previous step](./ExportDataToEventHubs.md), you exported IoT telemetry to Azure Event Hubs. In this step, you will connect the event hub to Azure Blob Storage to save telemetry data.
+In the [previous step](./CreateBlobStorage.md) you created a storage account to store telemetry data. In this step you will use Azure Stream Analytics to stream data into the storage account.
 
-## Azure blob storage
+## Azure Stream Analytics
 
-[Azure blob storage](https://azure.microsoft.com/services/storage/blobs/?WT.mc_id=agrohack-github-jabenn) allows you to store blobs of unstructured data that can be easily access from other Azure services, such as Azure ML Studio. Azure IoT Central has an export facility that can stream the telemetry data in to Azure Blob storage for processing.
+[Azure StreamAnalytics](https://azure.microsoft.com/services/stream-analytics/?WT.mc_id=agrohack-github-jabenn) provides real-time analytics on streams of data, allowing you to stream data from one service to another
 
-Azure has a concept of [storage accounts](https://docs.microsoft.com/azure/storage/common/storage-account-overview/?WT.mc_id=agrohack-github-jabenn), which wrap a range of storage services including file, table and blob. Blob storage uses collections to store different data in.
+### Create the Azure Stream Analytics Job
 
-To export data you will need an Azure account. If you don't have one, head to the [Azure Account](https://github.com/jimbobbennett/AgroHack#azure-account) instructions to create an account.
+Azure Stream Analytics jobs need to be created from the Azure Portal, you cannot create them using the Azure CLI.
 
-### Create a storage account and collection
-
-There are two ways to create a storage account - from the Azure Portal or the Azure CLI.
-
-#### Use the Azure Portal
+> If you don't want to use the portal, you can use PowerShell by following [these instructions](https://docs.microsoft.com/azure/stream-analytics/stream-analytics-quick-create-powershell?WT.mc_id=agrohack-github-jabenn).
 
 1. Open the [Azure Portal](https://portal.azure.com/?WT.mc_id=agrohack-github-jabenn)
 
 1. Log in with your Microsoft account if required
 
-##### Create the storage account
-
 1. From the left-hand menu select **+ Create a resource**
 
    ![The create a resource button](../Images/AzureCreateResource.png)
 
-1. Search for `storage account` and select *Storage account - blob, file, table, queue*
+1. Search for `Stream Analytics Job` and select *Stream Analytics Job*
 
-   ![Searching for storage account](../Images/SearchStorageAccount.png)
+   ![Searching for Stream Analytics Job](../Images/SearchStreamAnalytics.png)
 
 1. Select **Create**
 
-   ![The create storage button](../Images/CreateStorageButton.png)
+   ![The create Stream Analytics Job button](../Images/CreateStreamAnalyticsJob.png)
 
-1. Fill in the details for the storage account
+1. Fill in the details for the Stream Analytics Job
+
+   1. Name the job `TelemetryStreaming`
 
    1. Select your Azure subscription
 
-   1. For the *Resource group*, select **Create new** and name it `AgroHack`, then select **OK**
+   1. For the *Resource group*, select **AgroHack**
 
-      ![Creating a new resource group](../Images/CreateResourceGroup.png)
-
-      > Resource groups are logical groupings of Azure services, allowing you to manage all the services for a particular application or project together. At the end of this workshop this Resource Group will be deleted, deleting all the services created.
-
-   1. Give the storage account a name. This needs to be globally unique, so include things such as the data or your name, for example `agrohackjim2020`. To make it easier, name it the same as your Azure IoT Central app.
-
-   1. Select a *Location* closest to you
-
-   1. Set the *Replication* to be `Locally-redundant storage (LRS)` as this is the cheapest option. For production workloads you would want better redundancy, read the [documentation on data redundancy](https://docs.microsoft.com/azure/storage/common/storage-redundancy/?WT.mc_id=agrohack-github-jabenn) for more details on this.
+   1. Select a *Location* closest to you, the same location you used in the previous step to create the resource group and event hubs.
 
    1. Leave the rest of the options as the defaults
 
-   ![The storage settings](../Images/StorageDetails.png)
+   1. Select **Create**
 
-1. Select **Review + create**
-
-1. Select **Create**
+   ![The stream analytics job details](../Images/StreamAnalyticsJobDetails.png)
 
 1. Once the deployment has completed, select the **Go to resource** button.
 
-##### Create the collection
+## Configure the Azure Stream Analytics Job
 
-1. Search for `Containers` in the resource menu, and select it
+Azure Stream Analytics Jobs take data from an input, such as an Event Hub, run a query against the data, and send results to an output such as a storage account.
 
-   ![Searching for containers](../Images/BlobContainersOption.png)
+### Set an input
 
-1. Select **+ Container**
+1. From the Stream Analytics Job, select *Job topology -> Inputs* from the left-hand menu
 
-   ![The add container button](../Images/AddContainer.png)
+  ![Stream analytics inputs](../Images/StreamAnalyticsInputs.png)
 
-1. Name the container `environmentdata`. Leave the *Public access level* as `Private (No anonymous access)`. Then select **OK**.
+1. Select **+ Add stream input**, then select **Event Hub**
 
-   ![Setting the new container details](../Images/NewContainerDetails.png)
+   ![Add stream analytics input](../Images/AddStreamAnalyticsInputs.png)
 
-#### Use the Azure CLI
+1. Fill in the input details
 
-1. To install the Azure CLI, head to the [installation guide](https://docs.microsoft.com/cli/azure/install-azure-cli?view=azure-cli-latest&WT.mc_id=agrohack-github-jabenn) and follow the instructions for your OS.
+   1. Set the alias to be `telemetry`
 
-1. From your terminal, log in to the Azure CLI using the following command
+   1. Select *Select Event Hub from your subscriptions*
 
-   ```sh
-   az login
+   1. Select your subscription and Azure Event Hubs Namespace
+
+   1. Select *Use Existing* for the *Event hub name*
+
+   1. Select the `telemetry` event hub
+
+   1. Leave the rest of the options as the defaults
+
+   1. Select **Save**
+
+   ![input details](../Images/ConfigureInput.png)
+
+### Set an output
+
+1. From the Stream Analytics Job, select *Job topology -> Outputs* from the left-hand menu
+
+   ![Stream analytics outputs](../Images/StreamAnalyticsOutputs.png)
+
+1. Select **+ Add**, then select **Blob storage**
+
+   ![Add stream analytics input](../Images/AddStreamAnalyticsOutputs.png)
+
+1. Fill in the output details
+
+   1. Set the alias to be `blob-storage`
+
+   1. Select *Select storage from your subscriptions*
+
+   1. Select your subscription and Azure Event Hubs Namespace
+
+   1. Select the storage account you created in the previous part
+
+   1. Select *Use Existing* for the *Container*
+
+   1. Select the `environmentdata` container
+
+   1. Set the *Path pattern* to `{date}/{time}`. JSON records are appended to a single JSON file, and setting this will cause a new file to be created each hour in a folder hierarchy based off year/month/day/hour.
+
+   1. Leave the rest of the options as the defaults
+
+   1. Select **Save**
+
+   ![Output details](../Images/ConfigureOutput.png)
+
+### Create the query
+
+1. From the Stream Analytics Job, select *Job topology -> Query* from the left-hand menu
+
+   ![Stream analytics query](../Images/StreamAnalyticsQuery.png)
+
+1. Change the query to be the following
+
+   ```sql
+   SELECT
+        *
+    INTO
+        [blob-storage]
+    FROM
+        [telemetry]
    ```
 
-   A web browser window will be launched to allow you to log in to your Azure subscription
+   This will select data as it comes into the `telemetry` event hub, and select it into the `blob-storage` storage account.
 
-1. If you have multiple Azure subscriptions, you will need to select the one you want to use
+1. Select **Test Query** to test the query and see a sample output using real data from the event hub
 
-   1. List all the subscriptions using the following command
+   ![testing the query](../Images/TestQuery.png)
 
-      ```sh
-      az account list --output table
-      ```
+1. Select **Save Query**
 
-   1. Find the subscription id of the subscription you want to use and copy it
+   ![save the query](../Images/SaveQuery.png)
 
-   1. Set the active subscription using the following command
+### Start the job
 
-      ```sh
-      az account set --subscription <subscription id>
-      ```
+1. From the Stream Analytics Job, select *Overview* from the left-hand menu
 
-      For the `<subscription id>`, use the id you copied in the previous step
+   ![Stream analytics overview](../Images/StreamAnalyticsOverview.png)
 
-##### Create a resource group
+1. Select **Start**
 
-1. Run the following command to get a list of Azure locations
+   ![Start button](../Images/StartStreamAnalytics.png)
 
-   ```sh
-   az account list-locations --output table
-   ```
+1. For the *Job output start time* select **Now**
 
-   Note the name of the location closest to you
+1. Select **Start**
 
-1. Create a new Resource Group with the following command
+   ![Start button](../Images/StartStreamAnalyticsNow.png)
 
-   ```sh
-   az group create --name AgroHack --location <location>
-   ```
+## Validate the query
 
-   For the `<location>`, use the name of the location closest to you.
+You can validate that data is being streamed to the storage account via the Azure Portal, or via the CLI.
 
-   This will create a Resource Group called `AgroHack` in the location you specify.
-
-   > Resource groups are logical groupings of Azure services, allowing you to manage all the services for a particular application or project together. At the end of this workshop this Resource Group will be deleted, deleting all the services created.
-
-##### Create the storage account
-
-1. Create the storage account using the following command
-
-   ```sh
-   az storage account create \
-    --location <location> \
-    --name <account_name> \
-    --resource-group AgroHack \
-    --sku Standard_LRS
-   ```
-
-   For the `<location>`, use the name of the location closest to you.
-
-   For the `<account_name>`, pick a name that is globally unique, so include things such as the date or your name, for example `agrohackjim2020`. To make it easier, name it the same as your Azure IoT Central app.
-
-   The `-resource-group AgroHack` setting adds this storage account to the new Resource Group you created in the previous step.
-
-   The `--sku Standard_LRS` setting sets the data replication to be `Locally-redundant storage (LRS)` as this is the cheapest option. For production workloads you would want better redundancy, read the [documentation on data redundancy](https://docs.microsoft.com/azure/storage/common/storage-redundancy/?WT.mc_id=agrohack-github-jabenn) for more details on this.
-
-##### Create the collection
-
-1. Get the account keys for the new storage account. These access keys can be used to provide access to the storage account in the CLI and create the container. Get these by running the following command.
-
-   ```sh
-   az storage account keys list \
-    --account-name <account_name> \
-    --resource-group AgroHack \
-    --output table
-   ```
-
-   For `<account_name>` use the name you used for the storage account. The account keys are listed in the `Value` column of the output.
-
-1. Create the collection with the following command
-
-   ```sh
-   az storage container create \
-    --name environmentdata \
-    --account-name <account_name> \
-    --account-key <account_key>
-   ```
-
-   For `<account_name>` use the name you used for the storage account.
-
-   For `<account_key>` use one of the keys from the previous step.
-
-## Set up data export
-
-Azure IoT Central can export data to a number of different services, either to route the data to multiple other services, or to store data. For example, it can send IoT messages to Azure Event Hubs, and other services can listen on these events and respond - maybe by running code to process each message.
-
-To store telemetry data, Azure IoT Central can be connected to the blob storage container you just created, and it will save the data inside that container.
-
-### Create the data export
-
-1. Open the app in Azure IoT Central
-
-1. Select **Data export** from the left-hand menu
-
-   ![The data export menu](../Images/DataExportMenu.png)
-
-1. Select the **+New** button, then select **Azure Blob Storage**
-
-   ![Creating a new blob export](../Images/NewBlobExport.png)
-
-1. Give the export a name, such as `Export Environment Data`.
-
-1. Select the storage account you just created, along with the `environmentdata` container.
-
-1. Disable the export of devices and device templates
-
-1. Select **Save**
-
-   ![Configuring the data export](../Images/ConfigureDataExport.png)
-
-1. The new data export job will appear in the list, showing a status. Wait until the status shows *Running*, this will only take about 30 seconds or so.
-
-### Validate the data export
-
-You can validate that data is being received via the Azure Portal, or via the CLI.
-
-#### Validate the data with the Azure Portal
+### Validate the data with the Azure Portal
 
 1. Open the [Azure Portal](https://portal.azure.com/?WT.mc_id=agrohack-github-jabenn)
 
@@ -220,36 +171,22 @@ You can validate that data is being received via the Azure Portal, or via the CL
 
    ![The storage explorer menu item](../Images/StorageExplorerMenu.png)
 
-1. Expand the *Blob Containers* node, and select the *environmentdata* container. You will see a folder appear in the list for the telemetry from your device.
+1. Expand the *Blob Containers* node, and select the *environmentdata* container. You will see a list of the folders, one per year that the Azure IoT Central has been collecting data. Inside each year folder is a month folder, inside that a day, inside that an hour. In the hour folder is a single JSON document that will be appended to until the hour changes, when a new document will be created in a new folder for the new hour/day/month/year.
 
    ![Browsing the blob containers](../Images/BrowseBlobContainers.png)
 
-1. Double click on the folder and drill into the telemetry. It will be divided into folders by year, month, day, hour (UTC) and minute.
+1. Select a JSON file and select **Download** to download the file
 
-1. Download a `.json` file and view it in Visual Studio Code. It will contain one entry per telemetry value sent during a minute, with a time stamp, system properties and the telemetry as the body
+   ![downloading a blob ](../Images/DownloadBlob.png)
+
+1. View the JSON file in Visual Studio Code. It will contain one line per telemetry value sent during that hour, with telemetry details:
 
     ```json
-    {
-        "EnqueuedTimeUtc": "2020-02-13T21:59:49.2860000Z",
-        "Properties": {},
-        "SystemProperties": {
-            "connectionDeviceId": "raspberry_pi",
-            "connectionAuthMethod": "{\"scope\":\"device\",\"type\":\"sas\",\"issuer\":\"iothub\",\"acceptingIpFilterRule\":null}",
-            "connectionDeviceGenerationId": "637171474512477666",
-            "contentType": "application/json",
-            "contentEncoding": "utf-8",
-            "enqueuedTime": "2020-02-13T21:59:49.2860000Z"
-        },
-        "Body": {
-            "humidity": 58.13,
-            "pressure": 99.46,
-            "temperature": 16.68,
-            "soil_moisture": 470
-        }
-    }
+    {"humidity":60.17,"pressure":100.48,"temperature":17.05,"soil_moisture":434,"EventProcessedUtcTime":"2020-02-21T05:12:33.2547726Z","PartitionId":3,"EventEnqueuedUtcTime":"2020-02-21T05:07:40.7070000Z"}
+    {"humidity":59.56,"pressure":100.49,"temperature":17.06,"soil_moisture":437,"EventProcessedUtcTime":"2020-02-21T05:12:33.3641037Z","PartitionId":3,"EventEnqueuedUtcTime":"2020-02-21T05:07:50.7250000Z"}
     ```
 
-#### Validate the data with the Azure CLI
+### Validate the data with the Azure CLI
 
 1. Run the following command to list the blobs stored in the storage account
 
@@ -276,38 +213,22 @@ You can validate that data is being received via the Azure Portal, or via the CL
     --account-key <account_key>
    ```
 
-   For `<blob_name>` use be the `Name` value of one of the blobs from the list output by the previous step. You will need to use the full name including the folders, such as `d8dc5b3b-8324-43eb-a177-6ab725844410/telemetry/2020/02/13/20/46/01.json`.
+   For `<blob_name>` use be the `Name` value of one of the blobs from the list output by the previous step. You will need to use the full name including the folders, such as `2020/02/21/05/0_f16d0ddcf5ec44d58ef25d18d160aa57_1.json`.
 
    For `<account_name>` use the name you used for the storage account.
 
    For `<account_key>` use one of the keys used to create the collection.
 
-   This will download a file into the current directory called `data.json`. View this file with Visual Studio Code. It will contain one entry per telemetry value sent during a minute, with a time stamp, system properties and the telemetry as the body
+   This will download a file into the current directory called `data.json`. View this file with Visual Studio Code. It will contain one line per telemetry value sent during that hour, with telemetry details:
 
     ```json
-    {
-        "EnqueuedTimeUtc": "2020-02-13T21:59:49.2860000Z",
-        "Properties": {},
-        "SystemProperties": {
-            "connectionDeviceId": "raspberry_pi",
-            "connectionAuthMethod": "{\"scope\":\"device\",\"type\":\"sas\",\"issuer\":\"iothub\",\"acceptingIpFilterRule\":null}",
-            "connectionDeviceGenerationId": "637171474512477666",
-            "contentType": "application/json",
-            "contentEncoding": "utf-8",
-            "enqueuedTime": "2020-02-13T21:59:49.2860000Z"
-        },
-        "Body": {
-            "humidity": 58.13,
-            "pressure": 99.46,
-            "temperature": 16.68,
-            "soil_moisture": 470
-        }
-    }
+    {"humidity":60.17,"pressure":100.48,"temperature":17.05,"soil_moisture":434,"EventProcessedUtcTime":"2020-02-21T05:12:33.2547726Z","PartitionId":3,"EventEnqueuedUtcTime":"2020-02-21T05:07:40.7070000Z"}
+    {"humidity":59.56,"pressure":100.49,"temperature":17.06,"soil_moisture":437,"EventProcessedUtcTime":"2020-02-21T05:12:33.3641037Z","PartitionId":3,"EventEnqueuedUtcTime":"2020-02-21T05:07:50.7250000Z"}
     ```
 
 ## Use this data
 
-Once the data is in blob storage, it can be access and used by multiple Azure services. This workshop won't cover these use cases in depth as there are to0 many possibilities. To learn more about ways to use this data, check out the following documentation:
+Once the data is in blob storage, it can be access and used by multiple Azure services. This workshop won't cover these use cases in depth as there are too many possibilities. To learn more about ways to use this data, check out the following documentation:
 
 * [Access data in Azure storage services from ML Studio](https://docs.microsoft.com/azure/machine-learning/how-to-access-data/?WT.mc_id=agrohack-github-jabenn)
 * [Access cloud data in a Jupyter notebook](https://docs.microsoft.com/azure/notebooks/access-data-resources-jupyter-notebooks#azure-storage?WT.mc_id=agrohack-github-jabenn)
@@ -315,4 +236,4 @@ Once the data is in blob storage, it can be access and used by multiple Azure se
 
 <hr>
 
-In this step, you exported IoT telemetry to Azure Blob Storage. In the [next step](./TriggerRule.md) you will create an Azure IoT Central rule triggered when the soil moisture is too low.
+In this step, you exported IoT telemetry to Azure Blob Storage. In the [next step](./TriggerRule.md) you will create an Azure Function triggered by data via stream analytics.
