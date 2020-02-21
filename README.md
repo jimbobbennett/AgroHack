@@ -72,12 +72,12 @@ If you are a student aged 18 and up, or teacher and have an email address from a
 1. [Set up the environment monitor](./Steps/SetUpTheEnvironmentMonitor.md)
 1. [Create the application in Azure IoT Central](./Steps/CreateTheAppInIoTCentral.md)
 1. [Write the code to capture telemetry from the Raspberry Pi](./Steps/WriteThePiCode.md)
+1. [Export IoT telemetry to Azure Event Hubs](./Steps/ExportDataToEventHubs.md)
+1. [Connect the event hub to Blob Storage to save telemetry data](./Steps/ExportDataToBlobStorage.md)
 
 
 
 
-
-1. [Export data to Azure Blob Storage](./Steps/ExportDataToBlobStorage.md)
 1. [Trigger a rule when the soil moisture is too low](./Steps/TriggerRule.md)
 1. [Look up the weather for the device's location using Azure Maps](./Steps/CheckWeatherWithAzureMaps.md)
 

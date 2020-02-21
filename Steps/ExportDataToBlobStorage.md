@@ -37,6 +37,7 @@ There are two ways to create a storage account - from the Azure Portal or the Az
 1. Fill in the details for the storage account
 
    1. Select your Azure subscription
+
    1. For the *Resource group*, select **Create new** and name it `AgroHack`, then select **OK**
 
       ![Creating a new resource group](../Images/CreateResourceGroup.png)
@@ -75,8 +76,6 @@ There are two ways to create a storage account - from the Azure Portal or the Az
 
 #### Use the Azure CLI
 
-##### Create the storage account
-
 1. To install the Azure CLI, head to the [installation guide](https://docs.microsoft.com/cli/azure/install-azure-cli?view=azure-cli-latest&WT.mc_id=agrohack-github-jabenn) and follow the instructions for your OS.
 
 1. From your terminal, log in to the Azure CLI using the following command
@@ -105,6 +104,8 @@ There are two ways to create a storage account - from the Azure Portal or the Az
 
       For the `<subscription id>`, use the id you copied in the previous step
 
+##### Create a resource group
+
 1. Run the following command to get a list of Azure locations
 
    ```sh
@@ -124,6 +125,8 @@ There are two ways to create a storage account - from the Azure Portal or the Az
    This will create a Resource Group called `AgroHack` in the location you specify.
 
    > Resource groups are logical groupings of Azure services, allowing you to manage all the services for a particular application or project together. At the end of this workshop this Resource Group will be deleted, deleting all the services created.
+
+##### Create the storage account
 
 1. Create the storage account using the following command
 

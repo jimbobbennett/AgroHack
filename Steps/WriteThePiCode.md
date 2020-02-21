@@ -374,4 +374,4 @@ The Python app will only run as long as the terminal is connected. Ideally we wa
 
 <hr>
 
-In this step, you wrote the code to capture telemetry from the Raspberry Pi. In the [next step](./ExportDataToBlobStorage.md), you will export IoT telemetry to Azure Blob Storage.
+In this step, you wrote the code to capture telemetry from the Raspberry Pi. In the [next step](./ExportDataToEventHubs.md), you will export IoT telemetry to Azure Event Hubs.
