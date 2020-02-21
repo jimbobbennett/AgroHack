@@ -1,16 +1,16 @@
-# Trigger a rule when the soil moisture drops too low to check the weather
+# Create an Azure Function triggered by Azure Stream Analytics to check soil moisture
 
-In the [previous step](./ExportDataToBlobStorage.md), you exported IoT telemetry to Azure Blob Storage. In this step you will create an Azure IoT Central rule triggered when the soil moisture is too low.
+In the [previous step](./ExportDataToBlobStorage.md), you exported IoT telemetry to Azure Blob Storage. In this step you will create an Azure Function triggered by Azure Stream Analytics to check soil moisture.
 
-## Azure IoT Central rules
+## Azure Functions
 
-Rules are events that are triggered when a specific condition is met. For example in plant monitoring, if the soil moisture drops too low then the plant needs to be watered. A rule can trigger an event when the moisture value drops below a threshold, and this event can call another service, such as calling an Azure Function to check upcoming weather, or making a web request to turn on the water.
+[Azure Functions](https://azure.microsoft.com/services/functions/?WT.mc_id=agrohack-github-jabenn) is an event driven serverless compute platform, essentially a way to define small blocks of code that are triggered by events such as a web request, data changes in storage or events being put onto an Azure Event Hub. They can be written in a multitude of different languages including C#, F#, Java, JavaScript and Python.
 
-These rules can be triggered when a telemetry value goes above, below or is equal to either a constant value or a cloud or device property. This can be an individual telemetry value, or an aggregate value over a period of time, such as the average over 30 minutes.
+Azure Stream Analytics can call Azure Functions in response to streaming data, either individual messages or an aggregation across a time window.
 
-## Create an Azure Function to be triggered by the rule
+To monitor soil moisture, the moisture measurement needs to be checked against a defined level, and if it is too low then the plant needs watering. Events are coming in every 60 seconds, and the moisture level doesn't need to be checked that often, instead an average over 5 minutes can be checked.
 
-Azure Functions are small blocks of code that can be triggered by web requests, timers, changes to data or events published to queues or event hubs. They can be written in a number of different languages including Python. A function that responds to a web request can be triggered by an Azure IoT Central Rule.
+The Azure Function to be created will be triggered by a web request, called from Azure Stream Analytics.
 
 ### Configure Visual Studio Code for Azure Functions development
 
@@ -67,7 +67,7 @@ Azure Functions can be created inside Visual Studio Code, or via the Azure CLI.
 
    ![Selecting the trigger type](../Images/SelectFunctionTrigger.png)
 
-1. Name the function `SoilMoistureLow`
+1. Name the function `SoilMoistureCheck`
 
    ![Naming the function](../Images/FunctionName.png)
 
@@ -108,10 +108,10 @@ The project and virtual environment will be created. This will take a few second
    python3 -m venv .venv
    ```
 
-1. Create an Http trigger called SoilMoistureLow with the following command. This trigger will be triggered by a web request. By default, the function authorization level will be set to `Function`. This means it can only be called using a key either as a header or a query string. Without the key the function cannot be called.
+1. Create an Http trigger called SoilMoistureCheck with the following command. This trigger will be triggered by a web request. By default, the function authorization level will be set to `Function`. This means it can only be called using a key either as a header or a query string. Without the key the function cannot be called.
 
    ```sh
-   func new --name SoilMoistureLow --template "HttpTrigger"
+   func new --name SoilMoistureCheck --template "HttpTrigger"
    ```
 
 1. Open the folder in Visual Studio Code to edit the function code using the following command
@@ -122,9 +122,9 @@ The project and virtual environment will be created. This will take a few second
 
 ### Write the code for the function
 
-In this step, the function just needs to exist so that it can be called by the rule. In a later step more code will be added to it.
+In this step, the function just needs to exist so that it can be called by Azure Stream Analytics. In a later step more code will be added to it.
 
-1. Open the `__init__.py` file from the `SoilMoistureLow` folder if it's not already open
+1. Open the `__init__.py` file from the `SoilMoistureCheck` folder if it's not already open
 
 1. Change the `main` function to the following:
 
@@ -153,7 +153,7 @@ The function can be tested from inside Visual Studio Code, or from the Azure CLI
 
    ![The terminal output for the trigger running](../Images/TriggerRunningOutput.png)
 
-1. Test the trigger by opening [http://localhost:7071/api/SoilMoistureLow](http://localhost:7071/api/SoilMoistureLow) in your web browser. In the terminal in Visual Studio Code you will see the call being made, and the browser will show the output of `OK`.
+1. Test the trigger by opening [http://localhost:7071/api/SoilMoistureCheck](http://localhost:7071/api/SoilMoistureCheck) in your web browser. In the terminal in Visual Studio Code you will see the call being made, and the browser will show the output of `OK`.
 
    ![The function running in a browser](../Images/FunctionInBrowser.png)
 
@@ -193,7 +193,7 @@ The function can be tested from inside Visual Studio Code, or from the Azure CLI
 
    ![The terminal output for the trigger running](../Images/TriggerRunningOutput.png)
 
-1. Test the trigger by opening [http://localhost:7071/api/SoilMoistureLow](http://localhost:7071/api/SoilMoistureLow) in your web browser. In the terminal in Visual Studio Code you will see the call being made, and the browser will show the output of `OK`.
+1. Test the trigger by opening [http://localhost:7071/api/SoilMoistureCheck](http://localhost:7071/api/SoilMoistureCheck) in your web browser. In the terminal in Visual Studio Code you will see the call being made, and the browser will show the output of `OK`.
 
    ![The function running in a browser](../Images/FunctionInBrowser.png)
 
@@ -201,7 +201,7 @@ The function can be tested from inside Visual Studio Code, or from the Azure CLI
 
 ## Deploy the function to Azure
 
-Azure IoT Central needs to be able to access the URL for the function to be able to run it. This means it cannot call functions running locally, so the function will need to be published to Azure to make it publicly available and therefore callable from Azure IoT Central.
+Azure Stream Analytics needs to be able to access the URL for the function to be able to run it. This means it cannot call functions running locally, so the function will need to be published to Azure to make it publicly available and therefore callable from Azure Stream Analytics.
 
 The function can be deployed from Visual Studio code, or the Azure CLI.
 
@@ -262,7 +262,7 @@ The function can be deployed from Visual Studio code, or the Azure CLI.
 
    ![the functions](../Images/FunctionsListInCode.png)
 
-1. Right-click on the *SoilMoistureLow (HTTP)* function and select *Copy Function Url*
+1. Right-click on the *SoilMoistureCheck (HTTP)* function and select *Copy Function Url*
 
 1. Paste this URL into a browser and test the function is working
 
@@ -298,55 +298,95 @@ The function can be deployed from Visual Studio code, or the Azure CLI.
 
 1. Once the function is deployed, the Http trigger URL will be listed in the terminal with a query string of `code=<key>`, the `key` being your Function App key. Copy this entire URL and test it out in a browser.
 
-## Create the Azure IoT Central Rule
+## Create a new Azure Stream Analytics Job
 
-The function that was just created will be triggered when the soil moisture gets too low. The sensor being used has values of 300 and under for dry soil, so the rule will be based off a value of less than 300.
+### Create the job
 
-### Create the rule
+1. Follow the instructions in the [previous step](https://github.com/jimbobbennett/AgroHack/blob/master/Steps/ExportDataToBlobStorage.md#create-the-azure-stream-analytics-job) to create another Azure Stream Analytics Job. Name the job `SoilMoistureChecking`.
 
-1. Open the app in Azure IoT Central
+### Set an input
 
-1. From the left-hand menu select **Rules**
+1. Follow the instructions in the [previous step](https://github.com/jimbobbennett/AgroHack/blob/master/Steps/ExportDataToBlobStorage.md#set-an-input) to set up an input from the Azure Event Hub.
 
-   ![The rules menu in IoT central](../Images/IoTCentralRulesMenu.png)
+### Set an output
 
-1. Select **+ New**
+1. From the Stream Analytics Job, select *Job topology -> Outputs* from the left-hand menu
 
-   ![New rule button](../Images/NewRule.png)
+   ![Stream analytics outputs](../Images/StreamAnalyticsFunctionOutputs.png)
 
-1. Name the rule `Soil Moisture Low`
+1. Select **+ Add**, then select **Azure function**
 
-1. Select the `Environment Sensor` device template
+   ![Add stream analytics outputs](../Images/AddFunctionStreamAnalyticsOutput.png)
 
-1. Leave *Time aggregation* turned off.
+1. Fill in the output details
 
-1. Add a condition on the `Soil Moisture` telemetry value with an *Is less than* operator and a value of `300`
+   1. Set the alias to be `soil-moisture-check`
 
-1. When the event is fired, only the telemetry values that are listed in conditions are passed to the event. The function will eventually need all the data, so to get it passed it needs to be added to the rule. Add conditions for `Temperature`, `Pressure`, and `Humidity` with operators of *Is greater than or equal to* and values of `0`.
+   1. Select *Select azure function from your subscriptions*
 
-   When done the conditions should look like the image below.
+   1. Select your subscription
 
-   ![The telemetry](../Images/RuleTelemetry.png)
+   1. Select the function app you just deployed to
 
-1. In the *Actions* section select **+ Webhook**
+   1. Select the `SoilMoistureCheck` function
 
-   ![Add web hook button](../Images/AddWebhook.png)
+   1. Leave the rest of the values as the defaults
 
-1. Set the web hook *Display Name* to `Soil Moisture Low`
+   1. Select **Save**
 
-1. Paste the Function URL into the `Callback URL`. Make sure this includes the function app key as the `code` query string.
+   ![Configure the output](../Images/FunctionStreamAnalyticsOutput.png)
 
-1. Select **Done**
+### Create the query
 
-   ![The configured webhook](../Images/ConfigureWebhook.png)
+1. From the Stream Analytics Job, select *Job topology -> Query* from the left-hand menu
 
-1. Select **Save** from the top menu to save the rule
+   ![Stream analytics query](../Images/StreamAnalyticsFunctionQuery.png)
 
-   ![Save button](../Images/SaveRuleButton.png)
+1. Change the query to be the following
 
-### Monitor the rule
+   ```sql
+   SELECT
+       AVG(humidity) as humidity, 
+       AVG(pressure) as pressure, 
+       AVG(temperature) as temperature, 
+       AVG(soil_moisture) as soil_moisture
+   INTO
+       [soil-moisture-check]
+   FROM
+       [telemetry]
+   GROUP BY 
+       TumblingWindow(minute,5) 
+   ```
 
-The easiest way to ensure the rule is running is by verifying that the Azure Function gets called.
+   This will select data as it comes into the `telemetry` event hub, grouping data using a 5 minute [tumbling window](https://docs.microsoft.com/stream-analytics-query/tumbling-window-azure-stream-analytics?WT.mc_id=agrohack-github-jabenn). This groups data into 5 minute blocks and calls the query for each block. The query will get the average value of 4 telemetry values.
+
+1. Select **Test Query** to test the query and see a sample output using real data from the event hub
+
+   ![testing the query](../Images/TestFunctionQuery.png)
+
+1. Select **Save Query**
+
+   ![save the query](../Images/SaveFunctionQuery.png)
+
+### Start the job
+
+1. From the Stream Analytics Job, select *Overview* from the left-hand menu
+
+   ![Stream analytics overview](../Images/FunctionStreamAnalyticsOverview.png)
+
+1. Select **Start**
+
+   ![Start button](../Images/StartFunctionStreamAnalytics.png)
+
+1. For the *Job output start time* select **Now**
+
+1. Select **Start**
+
+   ![Start button](../Images/StartFunctionStreamAnalyticsNow.png)
+
+## Validate the query
+
+The easiest way to ensure the query is running correctly is by verifying that the Azure Function gets called.
 
 1. Open the [Azure Portal](https://portal.azure.com/?WT.mc_id=agrohack-github-jabenn)
 
@@ -366,8 +406,8 @@ The easiest way to ensure the rule is running is by verifying that the Azure Fun
 
    ![Function app calls](../Images/FunctionCalls.png)
 
-> The rule will only be called if your plant has soil moisture less than 300. For testing purposes you may want to increase the value in the rule to be sure the function is being called if your plant is in wet soil. Check the view for your device in Azure IoT Central to see the current soil moisture
+   It will take a few minutes for rows to appear as each window is 5 minutes, so nothing will appear until the 5 minute window is complete. Refresh the window using the **Refresh** button after a few minutes to see rows appear.
 
 <hr>
 
-In this step you created an Azure IoT Central rule triggered when the soil moisture is too low. In the [next step](./CheckWeatherWithAzureMaps.md) you will look up the weather for the device's location using Azure Maps.
+In this step you created an Azure Function triggered by Azure Stream Analytics to check soil moisture. In the [next step](./ExecuteIoTCommand.md) you will add to this function to trigger an Azure IoT Central command if the soil moisture is too low.

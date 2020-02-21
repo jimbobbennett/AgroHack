@@ -86,7 +86,7 @@ Azure Stream Analytics Jobs take data from an input, such as an Event Hub, run a
 
 1. Select **+ Add**, then select **Blob storage**
 
-   ![Add stream analytics input](../Images/AddStreamAnalyticsOutputs.png)
+   ![Add stream analytics outputs](../Images/AddStreamAnalyticsOutputs.png)
 
 1. Fill in the output details
 
@@ -120,11 +120,11 @@ Azure Stream Analytics Jobs take data from an input, such as an Event Hub, run a
 
    ```sql
    SELECT
-        *
-    INTO
-        [blob-storage]
-    FROM
-        [telemetry]
+       *
+   INTO
+       [blob-storage]
+   FROM
+       [telemetry]
    ```
 
    This will select data as it comes into the `telemetry` event hub, and select it into the `blob-storage` storage account.
@@ -236,4 +236,4 @@ Once the data is in blob storage, it can be access and used by multiple Azure se
 
 <hr>
 
-In this step, you exported IoT telemetry to Azure Blob Storage. In the [next step](./TriggerRule.md) you will create an Azure Function triggered by data via stream analytics.
+In this step, you exported IoT telemetry to Azure Blob Storage. In the [next step](./CreateFunction.md) you will create an Azure Function triggered by Azure Stream Analytics to check soil moisture.

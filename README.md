@@ -2,7 +2,7 @@
 
 This workshop is a hands on lab for building an AgroTech solution using [Azure IoT](https://azure.microsoft.com/overview/iot/?WT.mc_id=agrohack-github-jabenn).
 
-The final project that will be created is an internet connected device with environment sensors, that connects to a set of services that will store the telemetry data, and predict the weather using both [Azure Maps](https://azure.microsoft.com/services/azure-maps/?WT.mc_id=agrohack-github-jabenn) and an AI Model running in [Azure ML Studio](https://azure.microsoft.com/services/machine-learning/?WT.mc_id=agrohack-github-jabenn). This weather prediction will be combined with soil moisture data, and used to send a signal back to the device to indicate if the plants need watering, and this will be indicated by an LED.
+The final project that will be created is an internet connected device with environment sensors, that connects to a set of services that will store the telemetry data and predict the weather using [Azure Maps](https://azure.microsoft.com/services/azure-maps/?WT.mc_id=agrohack-github-jabenn). This weather prediction will be combined with soil moisture data, and used to send a signal back to the device to indicate if the plants need watering, and this will be indicated by an LED, lit if the plant needs watering.
 
 Most of this implementation will a no-code solution, [Azure IoT Central](https://azure.microsoft.com/services/iot-central/?WT.mc_id=agrohack-github-jabenn), an IoT Software-as-a-service (SaaS) platform. There will be some coding required, and this will all be in Python.
 
@@ -83,33 +83,21 @@ If you are a student aged 18 and up, or teacher and have an email address from a
 
 1. [Use Azure Stream Analytics to stream data into the storage account](./Steps/ExportDataToBlobStorage.md)
 
+1. [Create an Azure Function triggered by Azure Stream Analytics to check soil moisture](./Steps/CreateFunction.md)
 
-
-
+1. [Trigger an Azure IoT Central command if the soil moisture is too low](./Steps/ExecuteIoTCommand.md)
 
 1. [Clean up](./Steps/CleanUp.md)
 
+## Learn more, get certified
 
+If you want to learn more about Azure IoT Services, then check out the following:
 
-1. [Trigger a rule when the soil moisture is too low](./Steps/TriggerRule.md)
-1. [Look up the weather for the device's location using Azure Maps](./Steps/CheckWeatherWithAzureMaps.md)
+* [IoT learning paths on Microsoft Learn](https://docs.microsoft.com/learn/browse/?term=IOT&WT.mc_id=agrohack-github-jabenn)
+* [The IoT show on Channel9](https://channel9.msdn.com/Shows/Internet-of-Things-Show/?WT.mc_id=agrohack-github-jabenn)
 
-## Querying Azure Maps for weather data
+Once you have upskilled as an IoT developer, why not get certified with our upcoming AZ-220 Azure IoT Developer certification. Check out the details on our [certification page](https://docs.microsoft.com/learn/certifications/azure-iot-developer-specialty?WT.mc_id=agrohack-github-jabenn)
 
-### Setting up Azure Maps
+<br>
 
-### Querying for weather data
-
-## Query an AI model for weather
-
-### Building and training the model
-
-### Deploying the model
-
-### Calling the model to get weather data
-
-## Controlling the water indicator
-
-### Setting up the device in Azure IoT Central
-
-### Sending a message to the device
+<img src="./Images/microsoft-certified-specialty-badge.svg" alt="MS Certified Badge" width="200"/>
