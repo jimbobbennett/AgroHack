@@ -48,7 +48,7 @@ You will need to install some software to be able to program the Raspberry Pi an
 
     If you don't want to use the store, you can install from the [Python Downloads page](https://www.python.org/downloads/). If you do this, ensure you check the *Add Python to PATH* option.
 
-    ![The python installer dialog highlighting the Add Python 3.8 to PATH option](./images/PythonInstaller.png)
+    ![The python installer dialog highlighting the Add Python 3.8 to PATH option](./Images/PythonInstaller.png)
 
   * **macOS**
   
