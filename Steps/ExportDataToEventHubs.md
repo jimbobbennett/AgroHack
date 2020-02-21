@@ -36,7 +36,7 @@ The instance consists of a namespace, containing an event hub.
 
    1. Give the Event Hubs a name. This needs to be globally unique, so include things such as the data or your name, for example `agrohackjim2020`. To make it easier, name it the same as your Azure IoT Central app.
 
-   1. Set the *Pricing Tier* to `Basic`
+   1. Leave the *Pricing Tier* as `Standard`
 
    1. Select your Azure subscription
 
@@ -130,15 +130,12 @@ The instance consists of a namespace, containing an event hub.
    az eventhubs namespace create \
     --location <location> \
     --name <account_name> \
-    --sku Basic \
     --resource-group AgroHack
    ```
 
    For the `<location>`, use the name of the location closest to you, the same location that you used for the resource group.
 
    For the `<account_name>`, pick a name that is globally unique, so include things such as the date or your name, for example `agrohackjim2020`. To make it easier, name it the same as your Azure IoT Central app.
-
-   The `--sku Basic` setting adds sets this namespace to use the basic tier.
 
    The `--resource-group AgroHack` setting adds this event hubs namespace to the new Resource Group you created in the previous step.
 
@@ -149,14 +146,11 @@ The instance consists of a namespace, containing an event hub.
    ```sh
    az eventhubs eventhub create \
     --name Telemetry \
-    --message-retention 1
     --resource-group AgroHack \
     --namespace-name <namespace_name>
    ```
 
    The `--name Telemetry` names the event hub as `Telemetry`.
-
-   The `--message-retention 1` sets messages to be retained for 1 day before they can no longer be pulled from the event hub. This is needed as the Basic tier only supports 1 days retention.
 
    The `--resource-group AgroHack` setting adds this event hubs namespace to the new Resource Group you created in the previous step.
 
@@ -208,4 +202,4 @@ The easiest way to see messages flowing to the Event Hub is via the Azure Portal
 
 <hr>
 
-In this step you exported IoT telemetry to Azure Event Hubs. In the [next step](./ExportDataToBlobStorage.md), you will connect the event hub to Blob Storage to save telemetry data.
+In this step you exported IoT telemetry to Azure Event Hubs. In the [next step](./ExportDataToBlobStorage.md), you will connect the event hub to Azure Blob Storage to save telemetry data.

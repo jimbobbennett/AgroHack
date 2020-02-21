@@ -39,6 +39,7 @@ Like all good IoT labs, you will need hardware to make this work. You will also 
 You will need to install some software to be able to program the Raspberry Pi and create the various parts of this app
 
 * [Visual Studio Code](https://code.visualstudio.com/Download/?WT.mc_id=agrohack-github-jabenn)
+
 * [Azure Functions Core Tools](https://docs.microsoft.com/azure/azure-functions/functions-run-local?WT.mc_id=agrohack-github-jabenn)
 * Python
 
@@ -57,6 +58,7 @@ You will need to install some software to be able to program the Raspberry Pi an
     When Python is installed it will open a Finder window. Run the following scripts from inside that Finder window to set up certificates and add Python to your PATH:
 
     1. `Update Shell Profile.command`
+
     1. `Install Certificates.command`
 
 ### Azure account
@@ -70,11 +72,20 @@ If you are a student aged 18 and up, or teacher and have an email address from a
 ### Steps
 
 1. [Set up the environment monitor](./Steps/SetUpTheEnvironmentMonitor.md)
+
 1. [Create the application in Azure IoT Central](./Steps/CreateTheAppInIoTCentral.md)
+
 1. [Write the code to capture telemetry from the Raspberry Pi](./Steps/WriteThePiCode.md)
+
 1. [Export IoT telemetry to Azure Event Hubs](./Steps/ExportDataToEventHubs.md)
+
 1. [Connect the event hub to Blob Storage to save telemetry data](./Steps/ExportDataToBlobStorage.md)
 
+
+
+
+
+1. [Clean up](./Steps/CleanUp.md)
 
 
 

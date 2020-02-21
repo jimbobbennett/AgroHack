@@ -15,8 +15,11 @@ To create your app, you can either create it manually from scratch to learn abou
    [apps.azureiotcentral.com/build/new/59a05afb-9cd6-4d41-8554-7389f5277ec8](https://apps.azureiotcentral.com/build/new/59a05afb-9cd6-4d41-8554-7389f5277ec8)
 
 1. Sign in with your Microsoft account if needed
+
 1. Give your application a name that makes sense to you, such as `Agro Hack`
+
 1. Provide a unique URL for your app. This needs to be globally unique, so include things such as the date or your name. For example `agrohackjim2020`.
+
 1. Select a pricing plan. This hack only uses 2 devices, so is free for all tiers, so select the one that makes sense for you. The Free tier is ideal as long as you don't want your code to run longer than 7 days.
 
     For the free tier you will need to provide a name and phone number, that will be verified. For the other tiers you will need an Azure subscription. You can find details on different free subscriptions [here](https://github.com/jimbobbennett/AgroHack/blob/master/README.md#azure-account).
@@ -32,9 +35,13 @@ Head to [Create a device](#create-a-device) to configure a device inside the Azu
 #### Provision the app
 
 1. Head to [apps.azureiotcentral.com](https://apps.azureiotcentral.com/?WT.mc_id=agrohack-github-jabenn)
+
 1. From the menu on the side, select **Build**
+
 1. Select **Custom Apps**
+
 1. Sign in with your Microsoft account if needed
+
 1. Fill in your application details:
     1. Give your application a name that makes sense to you, such as `Agro Hack`
     1. Provide a unique URL for your app. This needs to be globally unique, so include things such as the data or your name. For example `agrohackjim2020`.
@@ -66,8 +73,11 @@ The environment sensor captures temperature, humidity, air pressure and soil moi
    ![The template type selector](../Images/SelectIoTDeviceType.png)
 
 1. Select the **Next: Customize** button
+
 1. Select the **Next: Review** button
+
 1. Select the **Create** button
+
 1. Name the template `Environment Sensor`
 
 Once the template is created, you need to add capabilities to it. These are defined using **capability models**, which define the capabilities of all devices that will use this template. Capability models are made up of three parts:
@@ -75,7 +85,9 @@ Once the template is created, you need to add capabilities to it. These are defi
 * **Interfaces** - these are reusable collections of capabilities, and are grouped into three categories:
 
    1. **Telemetry** - actual values detected and sent but the device, for example in a thermostat it could be the current detected temperature
+
    1. **Properties** - settings on the device, for example in a thermostat it could be the desired temperature. These can be set by the device, or via IoT Central and synced to the device.
+
    1. **Commands** - calls that can be made on the device from Visual Studio Code, optionally passing data. For example in a thermostat it could be called by a mobile app to send a request to change the desired temperature.
 
 * **Cloud properties** - these are properties set in Azure IoT central against a device, but not synced to the device. For example a device could have a cloud property for the account name of the owner, or the date it was last services

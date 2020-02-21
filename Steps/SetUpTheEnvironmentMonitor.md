@@ -29,7 +29,9 @@ Once the SD card has Raspbian Lite installed on it, you will need to modify a co
 ### Enable SSH
 
 1. Locate the SD card in File Explorer (Windows) or Finder (macOS). It will be in a volume called `boot`.
+
 1. Create a file in the root of `boot` called `ssh`. This file can be empty, it just needs to exist to allow you to ssh into the device
+
 1. Create another new file in the root of the SD card called `wpa_supplicant.conf`. This file contains the WiFi connection details. Add the following to this file:
 
     ```sh
@@ -49,9 +51,13 @@ Once the SD card has Raspbian Lite installed on it, you will need to modify a co
 ## Start up the Pi
 
 1. Insert the SD Card into the Pi
+
 1. Connect it to power, somewhere near your plant, and power it on
+
 1. Insert the Grove capacitive moisture sensor into the plants soil
+
 1. Fix the temperature/pressure/humidity sensor somewhere where it will give a consistent reading
+
 1. Test the connection by SSHing into your Pi. From your computer connect to `pi@raspberrypi.local`.
 
     ```sh
