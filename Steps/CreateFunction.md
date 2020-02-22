@@ -124,6 +124,8 @@ The project and virtual environment will be created. This will take a few second
 
 In this step, the function just needs to exist so that it can be called by Azure Stream Analytics, along with some logging. In a later step more code will be added to it to check weather and execute an Azure IoT Central command.
 
+> You can find all the code for this step in the [Code/Functions](../Code/Functions) folder.
+
 1. Open the `__init__.py` file from the `SoilMoistureCheck` folder if it's not already open
 
 1. Change the `main` function to the following:

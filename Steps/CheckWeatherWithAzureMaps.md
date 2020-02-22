@@ -144,6 +144,8 @@ The JSON has a value called `summary`, and in this is a value called `category`.
 
 This same call can be made from inside the function app.
 
+> You can find all the code for this step in the [Code/Functions](../Code/Functions) folder.
+
 1. Open Visual Studio Code
 
 1. Open the `local.settings.json` file from the root of the function app

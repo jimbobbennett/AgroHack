@@ -2,7 +2,7 @@
 
 In the [previous step](./CreateTheAppInIoTCentral.md), you created the app in Azure IoT Central. In this step, you will write the code to capture telemetry from the Raspberry Pi.
 
-> You can find all the code for this step in the [Code](../Code) folder.
+> You can find all the code for this step in the [Code/Pi](../Code/Pi) folder.
 
 ## Connect to the Raspberry Pi from Visual Studio Code
 
