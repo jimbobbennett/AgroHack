@@ -211,7 +211,7 @@ Device templates can be assigned to one or more devices - a device being an actu
 
    ![The Devices menu](../Images/DevicesMenu.png)
 
-1. Select the **Environment Monitoring** device template in the template list
+1. Select the **Environment Sensor** device template in the template list
 
    ![Selecting the device template](../Images/SelectEMDeviceTemplate.png)
 

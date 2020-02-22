@@ -122,18 +122,43 @@ The project and virtual environment will be created. This will take a few second
 
 ### Write the code for the function
 
-In this step, the function just needs to exist so that it can be called by Azure Stream Analytics. In a later step more code will be added to it.
+In this step, the function just needs to exist so that it can be called by Azure Stream Analytics, along with some logging. In a later step more code will be added to it to check weather and execute an Azure IoT Central command.
 
 1. Open the `__init__.py` file from the `SoilMoistureCheck` folder if it's not already open
 
 1. Change the `main` function to the following:
 
-   ```python
-   def main(req: func.HttpRequest) -> func.HttpResponse:
-    logging.info('Python HTTP trigger function processed a request.')
+    ```python
+    def main(req: func.HttpRequest) -> func.HttpResponse:
+        # Log the function was called
+        logging.info('Python HTTP trigger function processed a request.')
 
-    return func.HttpResponse(f"OK")
-   ```
+        # Get the JSON from the request
+        req_body = req.get_json()
+
+        # Log the JSON
+        logging.info(req_body)
+
+        # The JSON can contain a single telemetry record or a list
+        # If it's a list, get the last item
+        if isinstance(req_body, list):
+            req_body = req_body[-1]
+
+        # Get the telemetry values
+        temperature = req_body['temperature']
+        pressure = req_body['pressure']
+        humidity = req_body['humidity']
+        soil_moisture = req_body['soil_moisture']
+
+        # Log the values
+        logging.info("temperature: %.1f, pressure: %.1f, pressure: %.1f, soil_moisture: %.1f",
+                     temperature, pressure, humidity, soil_moisture)
+
+        # Return a 200 status
+        return func.HttpResponse(f"OK")
+    ```
+
+1. Save the file. If you don't want to have to remember to save files, you can turn on *Auto Save* by selecting *File -> Auto Save*.
 
 ### Test the function
 
@@ -159,7 +184,7 @@ The function can be tested from inside Visual Studio Code, or from the Azure CLI
 
 1. When you have finished testing the function, detach from the functions host debugger by selecting the **Disconnect** button from the debug toolbar
 
-   ![The disconnect button](../Images/StopDebugginButton.png)
+   ![The disconnect button](../Images/StopDebuggingButton.png)
 
 #### Test the function using the Azure CLI
 
@@ -346,16 +371,16 @@ The function can be deployed from Visual Studio code, or the Azure CLI.
 
    ```sql
    SELECT
-       AVG(humidity) as humidity, 
-       AVG(pressure) as pressure, 
-       AVG(temperature) as temperature, 
+       AVG(humidity) as humidity,
+       AVG(pressure) as pressure,
+       AVG(temperature) as temperature,
        AVG(soil_moisture) as soil_moisture
    INTO
        [soil-moisture-check]
    FROM
        [telemetry]
-   GROUP BY 
-       TumblingWindow(minute,5) 
+   GROUP BY
+       TumblingWindow(minute,5)
    ```
 
    This will select data as it comes into the `telemetry` event hub, grouping data using a 5 minute [tumbling window](https://docs.microsoft.com/stream-analytics-query/tumbling-window-azure-stream-analytics?WT.mc_id=agrohack-github-jabenn). This groups data into 5 minute blocks and calls the query for each block. The query will get the average value of 4 telemetry values.
