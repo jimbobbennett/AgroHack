@@ -177,7 +177,7 @@ Depending on the soil moisture levels sent by Azure Stream Analytics to the func
 
    This function just checks the soil moisture value against a threshold of 500. In a later part you will add logic to check weather, and only flag that the plant needs watering if the soil is dry and rain is not forecast.
 
-1. Call the new `needs_watering` method in the `main` function and put the value into a dictionary ready to send to the REST API as JSON. Add the following code at the end of the `main` function before the `return` statement.
+1. Call the new `needs_watering` method at the end of the `main` function and put the value into a dictionary ready to send to the REST API as JSON. Add the following code at the end of the `main` function before the `return` statement.
 
     ```python
     def main(req: func.HttpRequest) -> func.HttpResponse:
@@ -247,9 +247,7 @@ When running locally, Azure Functions uses a local file for configuration called
    iot_central_api_token = os.environ['IOT_CENTRAL_API_TOKEN']
    ```
 
-#### Call the REST API
-
-1. Open the `__init__.py` file from the `SoilMoistureCheck` folder in Visual Studio Code
+#### Make the call to the REST API
 
 1. Add the following code to the top of the file to import the `requests` module
 
