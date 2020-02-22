@@ -189,7 +189,7 @@ This same call can be made from inside the function app.
 
     Replace `<latitude>` and `<longitude>` with their respective values.
 
-    This code will build the URL to use to call the REST API, make a request, then get the result. The result is then converted to JSON, and the value of the `category` from the `summary` is found. If this value is `rain`, then the function returns `True` to show it will rain.
+    This code will build the URL to use to call the REST API, make a request, then get the result. The result is then converted a dictionary from the JSON document, and the value of the `category` from the `summary` is found. If this value is `rain`, then the function returns `True` to show it will rain.
 
 1. Change the `needs_watering` function to check if it will rain. If so, return `False` as there is no need to water the plant if rain is expected.
 
