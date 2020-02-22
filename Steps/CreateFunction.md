@@ -248,7 +248,7 @@ The function can be deployed from Visual Studio code, or the Azure CLI.
 
    ![select the agro hack resource group](../Images/SelectFunctionResourceGroup.png)
 
-1. Select the storage account that was created earlier for the data export
+1. Select the storage account that was created earlier for the data export. This storage account is used to save the files needed for the function app.
 
    ![select the storage account](../Images/SelectFuncAppStorage.png)
 
@@ -292,7 +292,7 @@ The function can be deployed from Visual Studio code, or the Azure CLI.
 
    For `<function_app_name>`, pick a name that is globally unique, so include things such as the date or your name, for example `agrohackjim2020`. To make it easier, name it the same as your Azure IoT Central app and storage account.
 
-   For `<storage_account>` use the name of the storage account you created when exporting data.
+   For `<storage_account>` use the name of the storage account you created when exporting data. This storage account is used to save the files needed for the function app.
 
 1. Deploy your function to this app with the following command
 

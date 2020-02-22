@@ -1,6 +1,6 @@
 # Trigger an Azure IoT Central command if the soil moisture is too low
 
-In this step you created an Azure Function triggered by Azure Stream Analytics to check soil moisture. In the [next step](./ExecuteIoTCommand.md) you will add to this function to trigger the Azure IoT Central command with a value depending on the level of the soil moisture, turning the LED off if the soil is wet, and on if it is dry.
+In the [previous step](./CreateFunction.md) you created an Azure Function triggered by Azure Stream Analytics to check soil moisture. In this step you will add to this function to trigger the Azure IoT Central command with a value depending on the level of the soil moisture, turning the LED off if the soil is wet, and on if it is dry.
 
 ## Execute Azure IoT Central commands
 
