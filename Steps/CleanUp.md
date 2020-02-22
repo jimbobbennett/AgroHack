@@ -1,6 +1,6 @@
 # Clean up your resources
 
-In this step you will clean up your Azure resources once you have finished with them. This way you will not be charged for any services, or not have these services eat into any free credit you have.
+The [previous step](./Summary.md) gave a summary of the completed solution. In this step you will clean up your Azure resources once you have finished with them. This way you will not be charged for any services, or not have these services eat into any free credit you have.
 
 ## Deleting the resource group
 
