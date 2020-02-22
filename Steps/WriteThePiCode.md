@@ -59,7 +59,7 @@ The code for this device will be written in Python 3, which comes by default in 
 
 ### Configure Visual Studio Code for Python development
 
-Visual Studio Code can install extension on the host device. The Python extension is needed to work with Python files.
+Visual Studio Code can install extensions on the host device. The Python extension is needed to work with Python files.
 
 1. Select the Extensions tab from the left hand menu, or select *View -> Extensions*
 
@@ -79,7 +79,9 @@ Visual Studio Code can install extension on the host device. The Python extensio
 
 ### Create a folder for the code
 
-1. Create a new folder in the home folder called EnvironmentMonitor
+1. When the new Visual Studio Code window is opened, the terminal should be opened by default. If not, open a new terminal by selecting *Terminal -> New Terminal*.
+
+1. From the Terminal in Visual Studio Code, create a new folder in the home folder called `EnvironmentMonitor`
 
    ```sh
    mkdir EnvironmentMonitor
@@ -116,7 +118,7 @@ Python comes in various versions, and Python apps can use external code in packa
 
    ![Naming the file app.py](../Images/NameAppPy.png)
 
-1. Create a new virtual environment called `.venv` using Python 3 with the following command
+1. Create a new virtual environment called `.venv` using Python 3 by running the following command in the terminal
 
    ```sh
    python3 -m venv .venv
@@ -148,6 +150,13 @@ Python has a package manager called `pip` that allows you to install code from o
    RPi.bme280
    grove.py
    ```
+
+   | Package name     | Description |
+   | ---------------- | ----------- |
+   | azure-iot-device | Allows communication with Azure IoT Central |
+   | python-dotenv    | Loads `.env` files to load environment variables for things like API keys to save them being hard coded |
+   | RPi.bme280       | The library for the BME280 sensor |
+   | grove.py         | The library to access the Grove soil moisture sensor and LED |
 
 1. Save the file. If you don't want to have to remember to always save files in Visual Studio Code, select *File -> Auto Save* to turn on automatic saving of files.
 
