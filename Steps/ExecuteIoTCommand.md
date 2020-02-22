@@ -205,6 +205,7 @@ When running locally, Azure Functions uses a local file for configuration called
 1. Below the imports, declare a field for the API key reading the value from the `IOT_CENTRAL_API_TOKEN` environment variable
 
    ```python
+   # Get the environment variables
    iot_central_api_token = os.environ['IOT_CENTRAL_API_TOKEN']
    ```
 

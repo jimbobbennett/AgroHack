@@ -3,10 +3,34 @@ import os
 import requests
 import azure.functions as func
 
+# Get the environment variables
 iot_central_api_token = os.environ['IOT_CENTRAL_API_TOKEN']
+maps_key = os.environ['MAPS_KEY']
+
+def will_rain():
+    # Build the REST URL with the latitude, longitude and maps key
+    lat = 47.6451635
+    lon = -122.1327916
+    url = 'https://atlas.microsoft.com/weather/forecast/daily/json?api-version=1.0&query={},{}&subscription-key={}'
+    url = url.format(lat, lon, maps_key)
+
+    # Make the REST request
+    result = requests.get(url)
+
+    # Get the category from the JSON
+    result_json = result.json()
+    summary = result_json['summary']
+    category = summary['category']
+
+    # Return if it will rain
+    return category == 'rain'
 
 def needs_watering(soil_moisture):
-    return soil_moisture < 500
+    # Check if it will rain, if so no need to water
+    if (will_rain()):
+        return False
+    else:
+        return soil_moisture < 500
 
 def main(req: func.HttpRequest) -> func.HttpResponse:
     # Log the function was called
@@ -44,30 +68,3 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
 
     # Return a 200 status
     return func.HttpResponse(f"OK")
-
-
-
-# iot_central_app = os.environ['IOT_CENTRAL_APP']
-# maps_key = os.environ['MAPS_KEY']
-
-# def get_location(device):
-#     url = 'https://' + iot_central_app + '.azureiotcentral.com/api/preview/devices/' + device + '/cloudProperties'
-#     headers = {'Authorization': iot_central_key}
-
-#     r = requests.get(url, headers=headers)
-#     location = json.loads(r.text)
-
-#     return location['device_location']
-
-# def get_weather(lat, lon):
-#     url = 'https://atlas.microsoft.com/weather/forecast/daily/json?api-version=1.0&query=' + \
-#           str(lat) + ',' + str(lon) + \
-#           '&subscription-key=' + maps_key
-    
-#     r = requests.get(url)
-#     weather = json.loads(r.text)
-#     forecast = weather['forecasts'][0]
-#     day_rain = forecast['day']['rain']['value']
-#     night_rain = forecast['night']['rain']['value']
-
-#     return day_rain + night_rain

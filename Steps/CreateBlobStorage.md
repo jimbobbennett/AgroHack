@@ -103,10 +103,10 @@ There are two ways to create a storage account - from the Azure Portal or the Az
 1. Create the storage account using the following command
 
    ```sh
-   az storage account create \
-    --location <location> \
-    --name <account_name> \
-    --resource-group AgroHack \
+   az storage account create
+    --location <location>
+    --name <account_name>
+    --resource-group AgroHack
     --sku Standard_LRS
    ```
 
@@ -123,20 +123,22 @@ There are two ways to create a storage account - from the Azure Portal or the Az
 1. Get the account keys for the new storage account. These access keys can be used to provide access to the storage account in the CLI and create the container. Get these by running the following command.
 
    ```sh
-   az storage account keys list \
-    --account-name <account_name> \
-    --resource-group AgroHack \
+   az storage account keys list
+    --account-name <account_name>
+    --resource-group AgroHack
     --output table
    ```
 
-   For `<account_name>` use the name you used for the storage account. The account keys are listed in the `Value` column of the output.
+   For `<account_name>` use the name you used for the storage account. 
+   
+   The account keys are listed in the `Value` column of the output.
 
 1. Create the collection with the following command
 
    ```sh
-   az storage container create \
-    --name environmentdata \
-    --account-name <account_name> \
+   az storage container create
+    --name environmentdata
+    --account-name <account_name>
     --account-key <account_key>
    ```
 

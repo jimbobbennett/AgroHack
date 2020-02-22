@@ -87,6 +87,8 @@ If you are a student aged 18 and up, or teacher and have an email address from a
 
 1. [Trigger an Azure IoT Central command if the soil moisture is too low](./Steps/ExecuteIoTCommand.md)
 
+1. [Call Azure Maps to check the weather forecast before sending the needs watering command](./Steps/CheckWeatherWithAzureMaps.md)
+
 1. [Clean up](./Steps/CleanUp.md)
 
 ## Learn more, get certified

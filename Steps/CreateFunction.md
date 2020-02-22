@@ -296,12 +296,12 @@ The function can be deployed from Visual Studio code, or the Azure CLI.
 1. Create a new Azure Function App to host the function using the following command
 
    ```sh
-   az functionapp create \
-    --resource-group AgroHack \
-    --consumption-plan-location <location> \
-    --name <function_app_name> \
-    --storage-account <storage_account> \
-    --runtime python \
+   az functionapp create
+    --resource-group AgroHack
+    --consumption-plan-location <location>
+    --name <function_app_name>
+    --storage-account <storage_account>
+    --runtime python
     --os-type linux
    ```
 

@@ -129,9 +129,9 @@ The instance consists of a namespace, containing an event hub.
 1. Create the event hubs namespace using the following command
 
    ```sh
-   az eventhubs namespace create \
-    --location <location> \
-    --name <account_name> \
+   az eventhubs namespace create
+    --location <location>
+    --name <account_name>
     --resource-group AgroHack
    ```
 
@@ -146,9 +146,9 @@ The instance consists of a namespace, containing an event hub.
 1. Create the event hub inside the namespace using the following command
 
    ```sh
-   az eventhubs eventhub create \
-    --name telemetry \
-    --resource-group AgroHack \
+   az eventhubs eventhub create
+    --name telemetry
+    --resource-group AgroHack
     --namespace-name <namespace_name>
    ```
 

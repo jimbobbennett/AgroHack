@@ -191,10 +191,10 @@ You can validate that data is being streamed to the storage account via the Azur
 1. Run the following command to list the blobs stored in the storage account
 
    ```sh
-   az storage blob list \
-    --account-name <account_name> \
-    --account-key <account_key> \
-    --container-name environmentdata \
+   az storage blob list
+    --account-name <account_name>
+    --account-key <account_key>
+    --container-name environmentdata
     --output table
    ```
 
@@ -205,11 +205,11 @@ You can validate that data is being streamed to the storage account via the Azur
 1. Download the blob to a file with the following command
 
    ```sh
-   az storage blob download \
-    --container-name environmentdata \
-    --name <blob_name> \
-    --file data.json \
-    --account-name <account_name> \
+   az storage blob download
+    --container-name environmentdata
+    --name <blob_name>
+    --file data.json
+    --account-name <account_name>
     --account-key <account_key>
    ```
 
