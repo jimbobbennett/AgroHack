@@ -12,7 +12,7 @@ To create your app, you can either create it manually from scratch to learn abou
 
 1. Follow this link to create a new Azure IoT Central app pre-configured for this workshop:
 
-   [apps.azureiotcentral.com/build/new/59a05afb-9cd6-4d41-8554-7389f5277ec8](https://apps.azureiotcentral.com/build/new/59a05afb-9cd6-4d41-8554-7389f5277ec8)
+   [apps.azureiotcentral.com/build/new/c136de48-e7a1-4f3d-83d1-05a8cbfa63ed](https://apps.azureiotcentral.com/build/new/c136de48-e7a1-4f3d-83d1-05a8cbfa63ed)
 
 1. Sign in with your Microsoft account if needed
 
@@ -84,13 +84,13 @@ Once the template is created, you need to add capabilities to it. These are defi
 
 * **Interfaces** - these are reusable collections of capabilities, and are grouped into three categories:
 
-   1. **Telemetry** - actual values detected and sent but the device, for example in a thermostat it could be the current detected temperature
+   1. **Telemetry** - actual values detected and sent by the device, for example in a thermostat it could be the current detected temperature
 
-   1. **Properties** - settings on the device, for example in a thermostat it could be the desired temperature. These can be set by the device, or via IoT Central and synced to the device.
+   1. **Properties** - settings on the device, for example in a thermostat it could be the desired temperature. These can be set by the device, or via Azure IoT Central and synced to the device.
 
-   1. **Commands** - calls that can be made on the device from Visual Studio Code, optionally passing data. For example in a thermostat it could be called by a mobile app to send a request to change the desired temperature.
+   1. **Commands** - calls that can be made on the device, optionally passing data. For example in a thermostat it could be called by a mobile app to send a request to change the desired temperature.
 
-* **Cloud properties** - these are properties set in Azure IoT central against a device, but not synced to the device. For example a device could have a cloud property for the account name of the owner, or the date it was last services
+* **Cloud properties** - these are properties set in Azure IoT Central against a device, but not synced to the device. For example a device could have a cloud property for the account name of the owner, the devices location, or the date it was last serviced.
 
 * **Views** - these are dashboards for a device that can contain charts, data values and other information allowing you to visualize telemetry or send commands.
 
