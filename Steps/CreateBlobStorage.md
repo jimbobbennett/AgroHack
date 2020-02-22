@@ -70,34 +70,6 @@ There are two ways to create a storage account - from the Azure Portal or the Az
 
 #### Use the Azure CLI
 
-1. To install the Azure CLI, head to the [installation guide](https://docs.microsoft.com/cli/azure/install-azure-cli?view=azure-cli-latest&WT.mc_id=agrohack-github-jabenn) and follow the instructions for your OS.
-
-1. From your terminal, log in to the Azure CLI using the following command
-
-   ```sh
-   az login
-   ```
-
-   A web browser window will be launched to allow you to log in to your Azure subscription
-
-1. If you have multiple Azure subscriptions, you will need to select the one you want to use
-
-   1. List all the subscriptions using the following command
-
-      ```sh
-      az account list --output table
-      ```
-
-   1. Find the subscription id of the subscription you want to use and copy it
-
-   1. Set the active subscription using the following command
-
-      ```sh
-      az account set --subscription <subscription id>
-      ```
-
-      For the `<subscription id>`, use the id you copied in the previous step
-
 ##### Create the storage account
 
 1. Create the storage account using the following command
@@ -148,4 +120,4 @@ There are two ways to create a storage account - from the Azure Portal or the Az
 
 <hr>
 
-In this step you created a storage account to store telemetry data. In the [next step](./ExportDataToBlobStorage) you will use Azure Stream Analytics to stream data into the storage account.
+In this step you created a storage account to store telemetry data. In the [next step](./ExportDataToBlobStorage.md) you will use Azure Stream Analytics to stream data into the storage account.
