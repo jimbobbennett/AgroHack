@@ -322,12 +322,153 @@ Python has a concept of `.env` files to store secrets such as connection details
 
    ![The app running showing telemetry in the terminal](../Images/AppOutput.png)
 
-<!--
 ### Breakdown of the code
 
- To Do 
- 
--->
+This Python file contains a lot of code to connect to the sensors, connect to Azure IoT Central, receive commands and send telemetry
+
+```python
+# Configuration parameters
+bme_pin = 1
+bme_address = 0x76
+moisture_pin = 2
+led_pin = 16
+
+# Create the sensors
+bus = smbus2.SMBus(bme_pin)
+calibration_params = bme280.load_calibration_params(bus, bme_address)
+
+moisture_sensor = GroveMoistureSensor(moisture_pin)
+
+# Create the LED
+led = GroveLed(led_pin)
+```
+
+This code defines the configuration for the sensors, including what pins they are connected to. It then creates objects for the BME280 temperature, pressure and humidity sensor, including loading calibration details from the sensor, the moisture sensor and the LED.
+
+```python
+# Load the Azure IoT Central connection parameters
+load_dotenv()
+id_scope = os.getenv('ID_SCOPE')
+device_id = os.getenv('DEVICE_ID')
+primary_key = os.getenv('PRIMARY_KEY')
+```
+
+This code loads the environment variables from the `.env` file, and gets the values into some fields.
+
+```python
+def getTemperaturePressureHumidity():
+    return bme280.sample(bus, bme_address, calibration_params)
+
+def getMoisture():
+    return moisture_sensor.moisture
+
+def getTelemetryData():
+    temp_pressure_humidity = getTemperaturePressureHumidity()
+    moisture = getMoisture()
+
+    data = {
+        "humidity": round(temp_pressure_humidity.humidity, 2),
+        "pressure": round(temp_pressure_humidity.pressure/10, 2),
+        "temperature": round(temp_pressure_humidity.temperature, 2),
+        "soil_moisture": round(moisture, 2)
+    }
+
+    return json.dumps(data)
+```
+
+The `getTemperaturePressureHumidity` function reads values from the BME280 sensor. The `getMoisture` function reads data from the soil moisture sensor. The `getTelemetryData` function calls these two functions to get the sensor values, then formats them into a JSON document, ready to send to Azure IoT Central.
+
+```python
+async def main():
+    ...
+
+if __name__ == '__main__':
+    asyncio.run(main())
+```
+
+This code sets up an asynchronous `main` function using the Python `asyncio` library.
+
+```python
+# provision the device
+async def register_device():
+    provisioning_device_client = ProvisioningDeviceClient.create_from_symmetric_key(
+        provisioning_host='global.azure-devices-provisioning.net',
+        registration_id=device_id,
+        id_scope=id_scope,
+        symmetric_key=primary_key)
+
+    return await provisioning_device_client.register()
+
+results = await asyncio.gather(register_device())
+registration_result = results[0]
+```
+
+This code defined an async function to register the device with Azure IoT central using the device provisioning service. This function is then called and the results of the registration are retrieved to get the connection details for the Azure IoT Central instance.
+
+```python
+# build the connection string
+conn_str='HostName=' + registration_result.registration_state.assigned_hub + \
+            ';DeviceId=' + device_id + \
+            ';SharedAccessKey=' + primary_key
+
+# The client object is used to interact with Azure IoT Central.
+device_client = IoTHubDeviceClient.create_from_connection_string(conn_str)
+
+# connect the client.
+print('Connecting')
+await device_client.connect()
+print('Connected')
+```
+
+This code takes the connection details, uses it to build a connection string, and creates an Azure IoT Hub device client. Azure IoT Hub is the underlying technology that provides the communication with Azure IoT Central. The device client then connects.
+
+```python
+# listen for commands
+async def command_listener(device_client):
+    while True:
+        method_request = await device_client.receive_method_request('needs_watering')
+        needs_watering = method_request.payload
+        print('Needs watering:', needs_watering)
+        payload = {'result': True}
+
+        if needs_watering:
+            led.on()
+        else:
+            led.off()
+
+        method_response = MethodResponse.create_from_method_request(
+            method_request, 200, payload
+        )
+```
+
+This code defines the `command_listener` function to listen to commands from Azure IoT Central, It continuously polls for a command by waiting for method requests - commands are implemented as methods on the device that are called. If a command is called, the payload is retrieved to see if the plant needs watering. Depending on the value of this, the LED is turned on or off. Finally a response is sent with an HTTP success code of 200 to say the command was handled.
+
+```python
+# async loop that sends the telemetry
+async def main_loop():
+    while True:
+        telemetry = getTelemetryData()
+        print(telemetry)
+
+        await device_client.send_message(telemetry)
+        await asyncio.sleep(60)
+```
+
+This code defines a main loop that will run continuously. Each loop will get the telemetry values, then send them to Azure IoT Central. Finally the loop sleeps for 60 seconds.
+
+```python
+listeners = asyncio.gather(command_listener(device_client))
+
+await main_loop()
+
+# Cancel listening
+listeners.cancel()
+
+# Finally, disconnect
+await device_client.disconnect()
+```
+
+This code starts the command listener and the main loop. Once the main loop exits, the command listener is cancelled and the device disconnects.
 
 ### Verify the data in Azure IoT Central
 

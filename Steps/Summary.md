@@ -38,6 +38,8 @@ There are many ways to improve this app. Suggestions include:
 
 * Add a second device to water the plant. Using an IoT powered watering system, actually set up automated watering controlled by a different device.
 
+* Use AI and the temperature and humidity data to predict the weather instead of using Azure Maps. You can read a way to do this in the [IoT docs](https://docs.microsoft.com/azure/iot-hub/iot-hub-weather-forecast-machine-learning?WT.mc_id=agrohack-github-jabenn)
+
 Have a go at adding some of these yourself.
 
 <hr>
