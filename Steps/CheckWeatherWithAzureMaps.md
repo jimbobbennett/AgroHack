@@ -200,3 +200,6 @@ This same call can be made from inside the function app.
             return soil_moisture < 500
     ```
 
+<hr>
+
+In this step you called Azure Maps to check the weather forecast before sending the needs watering command. The [next step](./Summary.md) gives a summary of the completed solution.
