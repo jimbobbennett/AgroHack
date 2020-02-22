@@ -135,27 +135,6 @@ In this step, the function just needs to exist so that it can be called by Azure
         # Log the function was called
         logging.info('Python HTTP trigger function processed a request.')
 
-        # Get the JSON from the request
-        req_body = req.get_json()
-
-        # Log the JSON
-        logging.info(req_body)
-
-        # The JSON can contain a single telemetry record or a list
-        # If it's a list, get the last item
-        if isinstance(req_body, list):
-            req_body = req_body[-1]
-
-        # Get the telemetry values
-        temperature = req_body['temperature']
-        pressure = req_body['pressure']
-        humidity = req_body['humidity']
-        soil_moisture = req_body['soil_moisture']
-
-        # Log the values
-        logging.info("temperature: %.1f, pressure: %.1f, pressure: %.1f, soil_moisture: %.1f",
-                     temperature, pressure, humidity, soil_moisture)
-
         # Return a 200 status
         return func.HttpResponse(f"OK")
     ```
