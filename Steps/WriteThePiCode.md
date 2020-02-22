@@ -151,13 +151,6 @@ Python has a package manager called `pip` that allows you to install code from o
    grove.py
    ```
 
-   | Package name     | Description |
-   | ---------------- | ----------- |
-   | azure-iot-device | Allows communication with Azure IoT Central |
-   | python-dotenv    | Loads `.env` files to load environment variables for things like API keys to save them being hard coded |
-   | RPi.bme280       | The library for the BME280 sensor |
-   | grove.py         | The library to access the Grove soil moisture sensor and LED |
-
 1. Save the file. If you don't want to have to remember to always save files in Visual Studio Code, select *File -> Auto Save* to turn on automatic saving of files.
 
 1. From the terminal, run the following command to install these packages:
