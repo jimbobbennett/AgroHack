@@ -2,6 +2,15 @@
 
 This workshop is a hands on lab for building an AgroTech solution using [Azure IoT](https://azure.microsoft.com/overview/iot/?WT.mc_id=agrohack-github-jabenn).
 
+> **Learn more, get certified**
+>
+> If you want to learn more about Azure IoT Services, then check out the following:
+> 
+> * [IoT learning paths on Microsoft Learn](https://docs.microsoft.com/learn/browse/?term=IOT&WT.mc_id=agrohack-github-jabenn)
+> * [The IoT show on Channel9](https://channel9.msdn.com/Shows/Internet-of-Things-Show/?WT.mc_id=agrohack-github-jabenn)
+>
+> Once you have upskilled as an IoT developer, why not get certified with our upcoming AZ-220 Azure IoT Developer certification. Check out the details on our [certification page](https://docs.microsoft.com/learn/certifications/azure-iot-developer-specialty?WT.mc_id=agrohack-github-jabenn)
+
 The final project that will be created is an internet connected device with environment sensors, that connects to a set of services that will store the telemetry data and predict the weather using [Azure Maps](https://azure.microsoft.com/services/azure-maps/?WT.mc_id=agrohack-github-jabenn). This weather prediction will be combined with soil moisture data, and used to send a signal back to the device to indicate if the plants need watering, and this will be indicated by an LED, lit if the plant needs watering.
 
 Most of this implementation will use a no-code IoT platform called [Azure IoT Central](https://azure.microsoft.com/services/iot-central/?WT.mc_id=agrohack-github-jabenn), an IoT Software-as-a-service (SaaS) platform. There will be some coding required for the connected device, and this will all be in Python.
@@ -98,16 +107,3 @@ To use Azure services you will need an Azure subscription. If you don't have a s
 1. [Summary](./Steps/Summary.md)
 
 1. [Clean up](./Steps/CleanUp.md)
-
-## Learn more, get certified
-
-If you want to learn more about Azure IoT Services, then check out the following:
-
-* [IoT learning paths on Microsoft Learn](https://docs.microsoft.com/learn/browse/?term=IOT&WT.mc_id=agrohack-github-jabenn)
-* [The IoT show on Channel9](https://channel9.msdn.com/Shows/Internet-of-Things-Show/?WT.mc_id=agrohack-github-jabenn)
-
-Once you have upskilled as an IoT developer, why not get certified with our upcoming AZ-220 Azure IoT Developer certification. Check out the details on our [certification page](https://docs.microsoft.com/learn/certifications/azure-iot-developer-specialty?WT.mc_id=agrohack-github-jabenn)
-
-<br>
-
-<img src="./Images/microsoft-certified-specialty-badge.svg" alt="MS Certified Badge" width="200"/>
