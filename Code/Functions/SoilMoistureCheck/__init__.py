@@ -61,7 +61,7 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
     request = { 'request' : needs_watering(soil_moisture) }
 
     # Call the REST API
-    url = 'https://agro-hack-jim-2020.azureiotcentral.com/api/preview/devices/r5s4h6nner/components/EnvironmentSensor_7jx/commands/needs_watering'
+    url = '<Command REST URL>'
     headers = {'Authorization': iot_central_api_token}
 
     requests.post(url, headers=headers, json = request)
