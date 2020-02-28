@@ -16,7 +16,7 @@ In this step you will assemble the hardware, and set up the Pi.
 
    ![The pin location for the temperature/pressure/humidity sensor](../Images/BmePin.png)
 
-1. Connect the Grove LED socket kit to socket **D24** on the Grove base hat, and insert an LED with the longer leg inserted into the positive hole
+1. Connect the Grove LED socket kit to socket **D16** on the Grove base hat, and insert an LED with the longer leg inserted into the positive hole
 
 ## Install the Pi software
 
