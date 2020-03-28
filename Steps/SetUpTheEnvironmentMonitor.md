@@ -76,9 +76,9 @@ Once the SD card has Raspbian Lite installed on it, you will need to modify a co
 
     Enter the current password, then a new password, then confirm the new password.
 
-## Turn on the I2C interface
+## Turn off the I2C interface
 
-The BME280 sensor is connected to an I2C (I squared C) interface. By default, this interface is disabled on the Pi, so it needs to be turned on.
+For the grove sensor to work, the I2C interface needs to be disabled as all I2C communications take place over the Grove base hat. 
 
 1. Launch the configuration tool on the Pi using the following command
 
@@ -94,7 +94,7 @@ The BME280 sensor is connected to an I2C (I squared C) interface. By default, th
 
     ![The I2C option](../Images/RaspiConfigInterfaceOptions.png)
 
-1. Select *Yes*
+1. Select *No*
 
    ![Select yes to turn it on](../Images/RaspiConfigEnableI2C.png)
 
@@ -114,7 +114,7 @@ The BME280 sensor is connected to an I2C (I squared C) interface. By default, th
 
     The SSH connection will be terminated, so you will need to reconnect.
 
-Once the Pi reboots the I2C interface will be enabled.
+Once the Pi reboots the I2C interface will be disabled.
 
 <hr>
 
