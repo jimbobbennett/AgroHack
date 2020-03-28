@@ -68,6 +68,54 @@ Once the SD card has Raspbian Lite installed on it, you will need to modify a co
 
     The default password is `raspberry`.
 
+1. Change the password from the default using the following command:
+
+    ```sh
+    passwd
+    ```
+
+    Enter the current password, then a new password, then confirm the new password.
+
+## Turn on the I2C interface
+
+The BME280 sensor is connected to an I2C (I squared C) interface. By default, this interface is disabled on the Pi, so it needs to be turned on.
+
+1. Launch the configuration tool on the Pi using the following command
+
+    ```sh
+    sudo raspi-config
+    ```
+
+1. Select option *5 Interfacing Options*
+
+   ![The raspi config tool](../Images/RaspiConfig.png)
+
+1. Select option *P5 I2C*
+
+    ![The I2C option](../Images/RaspiConfigInterfaceOptions.png)
+
+1. Select *Yes*
+
+   ![Select yes to turn it on](../Images/RaspiConfigEnableI2C.png)
+
+1. Select *OK*
+
+    ![Select OK](../Images/RaspiConfigI2CEnabled.png)
+
+1. Select *Finish*
+
+   ![Finish the config](../Images/RaspiConfigFinish.png)
+
+1. Reboot the Pi with the following command
+
+    ```sh
+    sudo reboot
+    ```
+
+    The SSH connection will be terminated, so you will need to reconnect.
+
+Once the Pi reboots the I2C interface will be enabled.
+
 <hr>
 
 In this step you assembled the hardware, and set up the Pi. In the [next step](./CreateTheAppInIoTCentral.md), you will create the app in Azure IoT Central.
