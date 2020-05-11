@@ -74,7 +74,7 @@ You will need to install some software to be able to program the Raspberry Pi an
 
     1. `Install Certificates.command`
 
-### Azure account
+### Azure subscription
 
 To use Azure services you will need an Azure subscription. If you don't have a subscription you can sign up for free.
 
