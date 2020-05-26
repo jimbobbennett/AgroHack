@@ -277,13 +277,13 @@ The function can be deployed from Visual Studio code, or the Azure CLI.
 1. Create a new Azure Function App to host the function using the following command
 
    ```sh
-   az functionapp create
-    --resource-group AgroHack
-    --consumption-plan-location <location>
-    --name <function_app_name>
+   az functionapp create \
+    --resource-group AgroHack \
+    --runtime python \
+    --os-type linux \
+    --consumption-plan-location <location> \
+    --name <function_app_name> \
     --storage-account <storage_account>
-    --runtime python
-    --os-type linux
    ```
 
    This will create a Function App in the `AgroHack` Resource Group, running on `linux` with the Python run time.
