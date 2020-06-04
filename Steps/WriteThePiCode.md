@@ -35,7 +35,7 @@ To enable remote development in Visual Studio Code, you will need to install the
 
 1. Select *+ Add new SSH Host*
 
-   ![The add new host option](../Images/VSConnectToHost.png)
+   ![The add new host option](../Images/AddNewSSHHost.png)
 
 1. Enter `pi@raspberrypi.local` as the SSH connection command
 
