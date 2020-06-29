@@ -25,7 +25,7 @@ Like all good IoT labs, you will need hardware to make this work. You will also 
 
 * A [Raspberry Pi](https://www.raspberrypi.org/products/raspberry-pi-4-model-b/) with an SD card and power supply, running Raspbian Lite.
 
-  ![A Raspberry Pi](./Images/pi4.jpg),
+  ![A Raspberry Pi](./Images/pi4.jpg)
 
 * A [Grove base hat](https://www.seeedstudio.io/Grove-Base-Hat-for-Raspberry-Pi-p-3186.html)
 
