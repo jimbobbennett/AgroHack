@@ -236,7 +236,10 @@ Python has a concept of `.env` files to store secrets such as connection details
         data = {
             "humidity": round(temp_pressure_humidity.humidity, 2),
             "pressure": round(temp_pressure_humidity.pressure/10, 2),
+            #default temperature in celsius
             "temperature": round(temp_pressure_humidity.temperature, 2),
+            #comment the above line and uncomment the below line, if you want to capture the temperature in fahrenheit
+            #"temperature": round(((temp_pressure_humidity.temperature * 9/5) + 32), 2),
             "soil_moisture": round(moisture, 2)
         }
 
